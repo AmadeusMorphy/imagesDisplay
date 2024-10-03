@@ -1,38 +1,43 @@
 .imgContainer {
     padding-top: 100px;
-    column-gap: 10px; /* Gap between columns */
+    column-gap: 10px;
 }
 
-/* Default to 3 columns */
+
 .imgContainer {
-    column-count: 3; /* Default for larger screens */
+    column-count: 3; 
+    padding-left: 100px;
+    padding-right: 100px;
 }
 
 .img {
-    break-inside: avoid; /* Prevents breaking inside the item */
-    margin-bottom: 10px; /* Gap between rows */
+    break-inside: avoid;
+    margin-bottom: 10px;
 }
 
 ::ng-deep img {
     border-radius: 15px;
-    width: 100%; /* Ensures images fill the column */
-    height: auto; /* Maintains aspect ratio */
+    width: 100%;
+    height: auto; 
 }
 
-/* Media Queries for Responsiveness */
 @media (max-width: 1200px) {
     .imgContainer {
-        column-count: 2; /* 2 columns for medium screens */
+        column-count: 2;
     }
 }
 
 @media (max-width: 768px) {
     .imgContainer {
-        column-count: 1; /* 1 column for small screens */
+        column-count: 1;
+        padding-right: 50px;
+        padding-left: 50px;
     }
 }
 
-/* From Uiverse.io by catraco */ 
+
+
+/* HEART BUTTON TOGGLE */ 
 .heart-container {
     --heart-color: rgb(255, 91, 137);
     position: relative;
