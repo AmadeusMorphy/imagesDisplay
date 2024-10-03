@@ -1,21 +1,36 @@
 .imgContainer {
-    display: flex;
-    justify-content: center;
     padding-top: 100px;
+    column-gap: 10px; /* Gap between columns */
 }
 
-.imgs {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 30px;
+/* Default to 3 columns */
+.imgContainer {
+    column-count: 3; /* Default for larger screens */
+}
+
+.img {
+    break-inside: avoid; /* Prevents breaking inside the item */
+    margin-bottom: 10px; /* Gap between rows */
 }
 
 ::ng-deep img {
     border-radius: 15px;
+    width: 100%; /* Ensures images fill the column */
+    height: auto; /* Maintains aspect ratio */
 }
 
+/* Media Queries for Responsiveness */
+@media (max-width: 1200px) {
+    .imgContainer {
+        column-count: 2; /* 2 columns for medium screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .imgContainer {
+        column-count: 1; /* 1 column for small screens */
+    }
+}
 
 /* From Uiverse.io by catraco */ 
 .heart-container {

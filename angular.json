@@ -30,7 +30,7 @@
               "src/assets"
             ],
             "styles": [
-              "node_modules/primeng/resources/themes/arya-purple/theme.css",
+              "node_modules/primeng/resources/themes/mdc-dark-deeppurple/theme.css",
               "src/styles.scss"
             ],
             "scripts": []
