@@ -1,5 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { MenuItem } from 'primeng/api';
+import { UserService } from './pages/services/user.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -14,6 +15,10 @@ export class AppComponent {
   isHidden = false;
 
   items!: MenuItem[];
+
+  constructor(
+    private userService: UserService
+  ) {}
 
   @HostListener('window:scroll', ['$event'])
   onWindowScroll() {
@@ -35,15 +40,74 @@ export class AppComponent {
   
   ngOnInit(): void {
             this.items = [
-            { 
-              label: 'Login', 
-              icon: 'pi pi-plus',
-              routerLink: '/login'
-            },
-            { 
-              label: 'Signup', 
-              icon: 'pi pi-search',
-            routerLink: '/register' }
+              {
+                label: 'Login',
+                icon: 'pi pi-plus',
+                routerLink: '/login'
+              },
+              {
+                label: 'Signup',
+                icon: 'pi pi-search',
+                routerLink: '/register'
+              },
+              {
+                label: 'Logout',
+                icon: 'pi pi-power-off',
+                command: () => this.onLogout()
+              },
+              {
+                label: 'Friends',
+                icon: 'pi pi-users',
+                routerLink: '/friends'
+              },
+              {
+                label: 'Add a friend',
+                icon: 'pi pi-user-plus',
+                routerLink: '/addFriend'
+              },
+              {
+                label: 'Friend Requests',
+                icon: 'pi pi-address-book',
+                routerLink: '/friendReq'
+              },
+
         ];
   }
+
+  isLoggedIn: boolean = false
+  userLoggedIn: boolean = false;
+  userName: any;
+  checkUserLoggedIn() {
+    const userData = localStorage
+    const user = localStorage.getItem('userId');
+    const UserName = localStorage.getItem('username')
+    this.userName = UserName
+    console.log(localStorage)
+    this.userLoggedIn = user !== null;
+    console.log(this.userLoggedIn)
+    if (user) {
+
+      this.isLoggedIn = true
+      this.userService.getCurrentUser(user).subscribe(
+        (res: any) => {
+
+          console.log("Manual Service Response: ", res)
+        }
+      )
+      this.userLoggedIn == true;
+      console.log("You are logged in as: ", user);
+    } else {
+      this.userLoggedIn == false;
+
+      console.error("You're not logged in")
+    }
+  }
+  onLogout() {
+      this.isLoggedIn = false;
+      localStorage.removeItem('userId'); // Remove user data
+      this.userLoggedIn = false; // Update login status
+      window.location.reload()
+    }
+  
+  
 }

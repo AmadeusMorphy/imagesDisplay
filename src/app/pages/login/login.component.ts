@@ -45,6 +45,8 @@ export class LoginComponent {
     this.userService.onLogin(email, password).subscribe(
       (res: any) => {
         console.log('Successfully logged in: ', res)
+        localStorage.setItem('username', res[0].username)
+        localStorage.setItem('userId', res[0].id)
         console.log(localStorage)
       }, (error) => {
         console.log("error stuff: ", error)

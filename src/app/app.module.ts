@@ -23,6 +23,9 @@ import { FormGroup } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
+import { FriendReqComponent } from './pages/friend-req/friend-req.component';
+import { FriendsComponent } from './pages/friends/friends.component';
+import { AddFriendComponent } from './pages/add-friend/add-friend.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +33,9 @@ import { FormsModule } from '@angular/forms';
     HomeComponent,
     RegisterComponent,
     LoginComponent,
+    FriendReqComponent,
+    FriendsComponent,
+    AddFriendComponent,
 
   ],
   imports: [
