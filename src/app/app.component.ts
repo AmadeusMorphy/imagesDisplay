@@ -51,9 +51,9 @@ export class AppComponent {
                 routerLink: '/register'
               },
               {
-                label: 'Logout',
-                icon: 'pi pi-power-off',
-                command: () => this.onLogout()
+                label: 'Inbox',
+                icon: 'pi pi-inbox',
+                routerLink: '/inbox'
               },
               {
                 label: 'Friends',
@@ -70,7 +70,12 @@ export class AppComponent {
                 icon: 'pi pi-address-book',
                 routerLink: '/friendReq'
               },
-
+              {
+                label: 'Logout',
+                icon: 'pi pi-power-off',
+                command: () => this.onLogout()
+              }
+              
         ];
   }
 

@@ -26,7 +26,9 @@ import { FormsModule } from '@angular/forms';
 import { FriendReqComponent } from './pages/friend-req/friend-req.component';
 import { FriendsComponent } from './pages/friends/friends.component';
 import { AddFriendComponent } from './pages/add-friend/add-friend.component';
-
+import { InboxComponent } from './pages/inbox/inbox.component';
+import { FieldsetModule } from 'primeng/fieldset';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,6 +38,7 @@ import { AddFriendComponent } from './pages/add-friend/add-friend.component';
     FriendReqComponent,
     FriendsComponent,
     AddFriendComponent,
+    InboxComponent,
 
   ],
   imports: [
@@ -44,7 +47,8 @@ import { AddFriendComponent } from './pages/add-friend/add-friend.component';
     HttpClientModule, MenubarModule, InputTextModule, 
     RippleModule, RouterOutlet,SidebarModule,  
     PanelMenuModule, MenuModule, ImageModule,
-    FormsModule, ReactiveFormsModule
+    FormsModule, ReactiveFormsModule, FieldsetModule,
+    ScrollPanelModule
   ],
   providers: [],
   bootstrap: [AppComponent]

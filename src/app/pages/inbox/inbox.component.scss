@@ -1,0 +1,112 @@
+.body {
+    margin-top: 100px;
+    
+}
+
+.inboxContainer {
+    display: flex;
+    height: 500px;
+    max-height: 934px;
+}
+
+@media (max-width: 600px) {
+    .inboxContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .chat {
+        display: none;
+    }
+
+
+}
+.accounts {
+    background-color: gray;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.chat {
+    background-color: burlywood;
+    width: 100%;
+}
+
+
+.inboxField {
+    height: 90%;
+    width: 90%;
+    max-height: 500px;
+    border-radius: 25px;
+}
+
+.userInfo {
+}
+.dms li {
+    list-style: none !important;
+    margin: 20px;
+}
+
+.dmInfo {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-left: 20px;
+}
+
+.userInfo {
+    margin-right: 20px;
+    cursor: pointer;
+}
+.dm {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 15px;
+    background-color: #3f3f3f69;
+    border-radius: 30px;
+    cursor: pointer;
+}
+
+.inputMessage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.336); 
+    height: 10%;
+}
+.inputField {
+    height: 80%;
+    width: 98%;
+    border-radius: 30px;
+}
+
+::ng-deep input.p-inputtext {
+    width: 98% !important;
+}
+.msg {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #3f3f3f69;
+}
+
+.dmName h3, .dmMsg h4 {
+    margin: 5px 0 5px 0;
+}
+
+.dmMsg h4 {
+    font-size: 15px;
+    color: rgb(204, 204, 204);
+}
+img {
+    height: 40px;
+    border-radius: 283px;
+    width: 40px;
+    margin-right: 25px;
+    margin-left: 10px;
+}
