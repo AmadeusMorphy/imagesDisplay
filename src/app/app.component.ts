@@ -1,4 +1,5 @@
 import { Component, HostListener } from '@angular/core';
+import { MenuItem } from 'primeng/api';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -11,6 +12,8 @@ export class AppComponent {
 
   lastScrollTop = 0;
   isHidden = false;
+
+  items!: MenuItem[];
 
   @HostListener('window:scroll', ['$event'])
   onWindowScroll() {
@@ -27,5 +30,20 @@ export class AppComponent {
     }
 
     this.lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // For Mobile or negative scrolling
+  }
+ 
+  
+  ngOnInit(): void {
+            this.items = [
+            { 
+              label: 'Login', 
+              icon: 'pi pi-plus',
+              routerLink: '/login'
+            },
+            { 
+              label: 'Signup', 
+              icon: 'pi pi-search',
+            routerLink: '/register' }
+        ];
   }
 }

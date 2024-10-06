@@ -16,12 +16,20 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {PanelMenuModule} from 'primeng/panelmenu';
 import { MenuModule } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
-import { ImageModule} from 'primeng/image'
+import { ImageModule} from 'primeng/image';
+import { RegisterComponent } from './pages/register/register.component';
+import { LoginComponent } from './pages/login/login.component'
+import { FormGroup } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
+    RegisterComponent,
+    LoginComponent,
 
   ],
   imports: [
@@ -29,7 +37,8 @@ import { ImageModule} from 'primeng/image'
     BrowserModule, ButtonModule, BrowserAnimationsModule, 
     HttpClientModule, MenubarModule, InputTextModule, 
     RippleModule, RouterOutlet,SidebarModule,  
-    PanelMenuModule, MenuModule, ImageModule
+    PanelMenuModule, MenuModule, ImageModule,
+    FormsModule, ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
