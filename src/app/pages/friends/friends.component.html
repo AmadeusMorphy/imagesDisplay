@@ -11,8 +11,8 @@
         <div class="card__subtitle">{{user.email}}</div>
         <div class="card__wrapper">
             <div class="reqBtn" style="border-radius: 30px;">
-            <p-button *ngIf="!isClicked" (onClick)="onSendReq(i)">View profile</p-button>
-            <p-button *ngIf="!isClicked" severity="danger" (onClick)="removeFriend(i)">Remove</p-button>
+            <button *ngIf="!isClicked" (click)="onSendReq(i)" class="friendsBtn">View profile</button>
+            <button *ngIf="!isClicked" (click)="removeFriend(i)" class="friendsBtn">Remove</button>
             <p-button *ngIf="isClicked" [disabled]="true">Removed</p-button>
 
         </div>
