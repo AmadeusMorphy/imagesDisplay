@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { UserService } from '../services/user.service';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-add-friend',
@@ -28,44 +29,50 @@ export class AddFriendComponent {
 
   }[] = []
 
+  currentUserInfo: any;
+
   ngOnInit(): void {
     
-    this.getUsers()
-
-    this.getCurrentUser()
+    
+    this.getCurrentUserAndUsers()
   }
 
-  getCurrentUser() {
-    this.currentUserId = localStorage.getItem('userId')
-    this.userService.getCurrentUser(this.currentUserId).subscribe(
-      (res: any) => {
-        console.log('Your logged in as: ', res)
-        this.currentUserBlock.push({
-          username: res.username,
-          profileImg: res.profileImg,
-          email: res.email,
-          id: res.id
-        });
-         console.log(this.currentUserBlock)
-      }
-    )
-  }
+  
+getCurrentUserAndUsers() {
+  this.currentUserId = localStorage.getItem('userId');
+  
+  this.userService.getCurrentUser(this.currentUserId).pipe(
+    switchMap((res: any) => {
+      this.currentUserInfo = res;
+      console.log('Your logged in as: ', res);
+      this.currentUserBlock.push({
+        username: res.username,
+        profileImg: res.profileImg,
+        email: res.email,
+        id: res.id
+      });
+      return this.userService.getUser(); // Proceed to get users after current user info is fetched
+    })
+  ).subscribe(
+    (res: any) => {
+      console.log(res);
+      const currentUserFriendsIds = this.currentUserInfo?.friends?.map((friend: any) => friend.id) || [];
 
-  getUsers() {
-    this.userService.getUser().subscribe(
-      (res: any) => {
-        console.log(res)
-        this.users = res.map((item: any) => {
-          return {
-            id: item.id,
-            username: item.username,
-            profileImg: item.profileImg
-          }
-        })
-      }
-    )
-  }
-
+      // Filter out users who are already friends
+      this.users = res.filter((item: any) => !currentUserFriendsIds.includes(item.id)).map((item: any) => {
+        return {
+          id: item.id,
+          username: item.username,
+          profileImg: item.profileImg
+        };
+      });
+      console.log('Filtered Users:', this.users);
+    },
+    (error) => {
+      console.log('Error:', error);
+    }
+  );
+}
 
   onSendReq(index: number) {
     this.users[index].isReq = true;

@@ -1,5 +1,7 @@
 
 <div class="body">
+
+    <h2 *ngIf="this.friends.length == 0">You dont have any friends</h2>
     <div class="card" *ngFor="let user of friends; let i = index">
         <div class="card__img">
             <img src="assets/bgTest2.png" class="bgImg">

@@ -43,6 +43,7 @@ export class FriendsComponent {
             email: item.email,
           }
         })
+        console.log(this.friends)
       }
     )
   }
