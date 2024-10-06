@@ -50,6 +50,18 @@ export class UserService {
     })
   )
   }
+  removeFriend(userId: string, friend: string): Observable<any> {
+    return this.getCurrentUser(userId).pipe(
+    switchMap(user => {
+      const updateFriends = user.friends ? user.friends.filter((req: { id: string}) => req.id !== friend) : [];
+      return this.http.put<any>(`${this.apiUrl}/${userId}`, {...user, friends: updateFriends}).pipe(
+        tap((updateFriends: any) => {
+          console.log('Friend req removed: ', updateFriends)
+        })
+      )
+    })
+  )
+  }
   acceptFriendReq(userId: string, acceptReq: { username: string, profileImg: string, email: string, id: string }): Observable<any> {
     return this.getCurrentUser(userId).pipe(
       switchMap(user => {

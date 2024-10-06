@@ -9,8 +9,10 @@
         <div class="card__subtitle">{{user.email}}</div>
         <div class="card__wrapper">
             <div class="reqBtn" style="border-radius: 30px;">
-            <!-- <p-button *ngIf="!user.isReq" (onClick)="onSendReq(i)">Add friend</p-button>
-            <p-button *ngIf="user.isReq" [disabled]="true">Request Sent</p-button> -->
+            <p-button *ngIf="!isClicked" (onClick)="onSendReq(i)">View profile</p-button>
+            <p-button *ngIf="!isClicked" severity="danger" (onClick)="removeFriend(i)">Remove</p-button>
+            <p-button *ngIf="isClicked" [disabled]="true">Removed</p-button>
+
         </div>
         </div>
     </div>
