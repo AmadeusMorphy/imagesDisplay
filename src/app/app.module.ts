@@ -30,7 +30,7 @@ import { InboxComponent } from './pages/inbox/inbox.component';
 import { FieldsetModule } from 'primeng/fieldset';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-
+import { DialogModule } from 'primeng/dialog';
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,7 +50,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     RippleModule, RouterOutlet,SidebarModule,  
     PanelMenuModule, MenuModule, ImageModule,
     FormsModule, ReactiveFormsModule, FieldsetModule,
-    ScrollPanelModule, ProgressSpinnerModule
+    ScrollPanelModule, ProgressSpinnerModule, DialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

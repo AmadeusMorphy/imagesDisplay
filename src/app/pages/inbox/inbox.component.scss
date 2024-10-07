@@ -198,6 +198,7 @@
 }
 
 .imgMsg img {
+    width: 98%;
     border-radius: 20px;
 }
 
@@ -263,4 +264,44 @@
   .custom-scrollbar::-webkit-scrollbar-track {
     background-color: transparent; /* Background color behind scrollbar */
   }
+
+
+  .imgContainer {
+    padding-top: 100px;
+    column-gap: 10px;
+}
+
+
+.imgContainer {
+    column-count: 3; 
+    padding-left: 100px;
+    padding-right: 100px;
+}
+
+.img {
+    break-inside: avoid;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+::ng-deep img {
+    border-radius: 15px;
+    width: 100%;
+    height: auto; 
+}
+
+@media (max-width: 1200px) {
+    .imgContainer {
+        column-count: 2;
+    }
+}
+
+@media (max-width: 768px) {
+    .imgContainer {
+        column-count: 1;
+        padding-right: 50px;
+        padding-left: 50px;
+    }
+}
+
   

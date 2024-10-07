@@ -82,11 +82,7 @@ export class FriendReqComponent {
       (res: any) => {
         console.log('Friend request accepted: ', res);
 
-        this.userService.acceptFriendReq(this.requesterId, this.currrentUser).subscribe(
-          (res: any) => {
-            console.log('the requester is fiends with u too: ', res)
-          }
-        )
+
         
         // After accepting, remove the friend request from `friendRequests`
         this.userService.removeFriendReq(this.currentUserId, this.selectedUser).subscribe(
@@ -97,6 +93,11 @@ export class FriendReqComponent {
    // Remove the accepted request from the UI
           }
         );
+        this.userService.acceptFriendReq(this.requesterId, this.currrentUser).subscribe(
+          (res: any) => {
+            console.log('the requester is fiends with u too: ', res)
+          }
+        )
       },
       (error) => {
         console.log('Error: ', error);

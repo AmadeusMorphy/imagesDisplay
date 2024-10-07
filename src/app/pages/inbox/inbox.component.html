@@ -61,24 +61,40 @@
     </div>
 </div>
 
-<div *ngIf="showImageSelection" class="image-selection-modal">
-    <h3>Select an Image</h3>
-    <div class="image-grid">
-        <!-- Loop through user's images -->
-        <div *ngFor="let image of currentUserInfo.images" class="image-item" (click)="selectImage(image)">
-            <img [src]="image" alt="Image" />
+<p-dialog 
+    header="Header" 
+    [(visible)]="showImageSelection" 
+    [modal]="true" 
+    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" 
+    [style]="{ width: '50vw' }" 
+    [draggable]="false" 
+    [resizable]="false">
+
+        <h3>Select an Image</h3>
+        <!-- <div class="image-grid">
+            <div *ngFor="let image of currentUserInfo.images" class="image-item" (click)="selectImage(image)">
+                <img [src]="image" alt="Image" />
+            </div>
+        </div> -->
+        <div class="imgContainer">
+            <div class="imgs">
+        
+                <div class="img" *ngFor="let image of currentUserInfo.images">
+                    <p-image [src]="image" alt="Image" width="auto" (click)="selectImage(image)" />
+                </div>
+            </div>
         </div>
-    </div>
-    <button (click)="closeImageSelection()">Close</button>
-</div>
+</p-dialog>
 
-<!-- Friends List Modal or Dropdown -->
-<div *ngIf="showFriendsList && !isLoading" class="friends-list-modal">
-    <div class="inboxList" style="width: 24%;">
-        <h3>Select a Friend to Chat</h3>
-        <p-button icon="pi pi-times" (onClick)="showFriendsList = false" severity="danger" />
-
-    </div>
+<p-dialog 
+    *ngIf="showFriendsList && !isLoading"
+    header="Header" 
+    [(visible)]="showFriendsList" 
+    [modal]="true" 
+    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" 
+    [style]="{ width: '50vw' }" 
+    [draggable]="false" 
+    [resizable]="false">
 
     <div class="newList">
         <div *ngFor="let friend of friendsList" class="newChat" (click)="startNewChat(friend)">
@@ -86,5 +102,4 @@
             <h3 style="margin-left: 10px;">{{ friend.username }}</h3>
         </div>
     </div>
-
-</div>
+</p-dialog>
