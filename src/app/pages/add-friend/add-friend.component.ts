@@ -13,6 +13,8 @@ export class AddFriendComponent {
     private userService: UserService
   ){}
 
+  isLoading: boolean = false;
+
   currentUserBlock: {
     username: string,
     profileImg: string,
@@ -39,6 +41,7 @@ export class AddFriendComponent {
 
   
   getCurrentUserAndUsers() {
+    this.isLoading = true
     this.currentUserId = localStorage.getItem('userId');
   
     this.userService.getCurrentUser(this.currentUserId).pipe(
@@ -53,24 +56,25 @@ export class AddFriendComponent {
           email: res.email,
           id: res.id
         });
-  
-        return this.userService.getUser(); // Proceed to get users after current user info is fetched
+        
+        return this.userService.getUser();
       })
     ).subscribe(
       (res: any) => {
         console.log(res);
         const currentUserFriendsIds = this.currentUserInfo?.friends?.map((friend: any) => friend.id) || [];
-  
+        
         // Filter out users who are already friends and the current user
         this.users = res.filter((item: any) => 
           !currentUserFriendsIds.includes(item.id) && item.id !== this.currentUserId
-        ).map((item: any) => {
-          return {
-            id: item.id,
-            username: item.username,
-            profileImg: item.profileImg
-          };
-        });
+      ).map((item: any) => {
+        return {
+          id: item.id,
+          username: item.username,
+          profileImg: item.profileImg
+        };
+      });
+      this.isLoading = false
         console.log('Filtered Users:', this.users);
       },
       (error) => {

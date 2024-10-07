@@ -22,25 +22,26 @@ export class AppComponent {
     private router: Router
   ) {}
 
-  @HostListener('window:scroll', ['$event'])
-  onWindowScroll() {
-    const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+  // @HostListener('window:scroll', ['$event'])
+  // onWindowScroll() {
+  //   const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
     
-    if (currentScroll > this.lastScrollTop && currentScroll > 100) {
+  //   if (currentScroll > this.lastScrollTop && currentScroll > 100) {
 
-      this.isHidden = true;
+  //     this.isHidden = true;
 
-    } else {
+  //   } else {
 
-      this.isHidden = false;
+  //     this.isHidden = false;
       
-    }
+  //   }
 
-    this.lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // For Mobile or negative scrolling
-  }
+  //   this.lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // For Mobile or negative scrolling
+  // }
  
   
   ngOnInit(): void {
+    this.checkUserLoggedIn()
             this.items = [
               {
                 label: 'Login',
@@ -89,6 +90,7 @@ export class AppComponent {
     const user = localStorage.getItem('userId');
     const UserName = localStorage.getItem('username')
     this.userName = UserName
+    console.log(this.userName)
     console.log(localStorage)
     this.userLoggedIn = user !== null;
     console.log(this.userLoggedIn)
@@ -112,6 +114,7 @@ export class AppComponent {
   onLogout() {
       this.isLoggedIn = false;
       localStorage.removeItem('userId'); // Remove user data
+      this.checkUserLoggedIn()
       this.userLoggedIn = false; // Update login status
       this.router.navigateByUrl('/login')
     }

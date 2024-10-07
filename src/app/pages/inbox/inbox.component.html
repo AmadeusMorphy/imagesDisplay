@@ -1,8 +1,16 @@
-<div class="chat-container">
+<div class="loading" *ngIf="isLoading">
+<p-progressSpinner ariaLabel="loading" />
+</div>
+
+
+<div class="chat-container" *ngIf="!isLoading">
     <!-- User List / Inbox -->
     <div class="user-list" [ngClass]="{'hidden': selectedReceiver}">
-        <h3>Inbox</h3>
-        <button class="plus-button" (click)="showFriendsList = true">+</button> <!-- Plus button to start a new chat -->
+        <div class="inboxList">
+            <h3>Inbox</h3>
+            <p-button icon="pi pi-plus" (onClick)="showFriendsList = true" severity="help" />
+            <!-- <button class="plus-button" (click)="showFriendsList = true">+</button> -->
+        </div>
         <div *ngFor="let user of inboxUsers" class="user" (click)="selectUser(user)">
             <img [src]="user.profileImg || 'default-profile.png'" alt="Profile" />
             <h3>{{ user.username }}</h3>
@@ -16,28 +24,37 @@
             <h3>Chatting with {{ selectedReceiver.username }}</h3>
         </div>
         <h3 *ngIf="!isMobile">Chatting with {{ selectedReceiver.username }}</h3>
-        <div class="messages">
-            <div *ngFor="let message of getFilteredMessages()" class="message">
+ 
+        <!--I want it from here-->
+        <div [ngClass]="{'sent-message': message.senderId === currentUserId, 'received-message': message.senderId !== currentUserId}" *ngFor="let message of getFilteredMessages()" >
+            <div class="message">
                 <p><strong>{{ message.senderId === currentUserId ? 'You' : selectedReceiver.username }}:</strong> {{ message.content }}</p>
-                <span>{{ message.timestamp | date: 'short' }}</span>
             </div>
+            <span>{{ message.timestamp | date: 'short' }}</span>
         </div>
-
+        <!--to here-->
+        
         <!-- Send a message -->
         <div class="send-message">
-            <input type="text" [(ngModel)]="newMessage" placeholder="Type a message..." />
+            <input type="text" [(ngModel)]="newMessage" (keydown.enter)="sendMessage()" placeholder="Type a message..." />
             <button (click)="sendMessage()">Send</button>
         </div>
     </div>
 </div>
 
 <!-- Friends List Modal or Dropdown -->
-<div *ngIf="showFriendsList" class="friends-list-modal">
+<div *ngIf="showFriendsList && !isLoading" class="friends-list-modal">
+    <div class="inboxList" style="width: 24%;">
     <h3>Select a Friend to Chat</h3>
-    <ul>
-        <li *ngFor="let friend of friendsList" (click)="startNewChat(friend)">
-            {{ friend.username }}
-        </li>
-    </ul>
-    <button (click)="showFriendsList = false">Close</button>
+    <p-button icon="pi pi-times" (onClick)="showFriendsList = false" severity="danger" />
+
+    </div>
+
+    <div class="newList">
+    <div *ngFor="let friend of friendsList" class="newChat" (click)="startNewChat(friend)">
+        <img [src]="friend.profileImg || 'default-profile.png'" alt="Profile" />
+        <h3 style="margin-left: 10px;">{{ friend.username }}</h3>
+    </div>
+</div>
+
 </div>

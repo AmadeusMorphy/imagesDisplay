@@ -1,5 +1,8 @@
 
-<div class="body">
+
+<p-progressSpinner ariaLabel="loading" *ngIf="isLoading"/>
+
+<div class="body" *ngIf="!isLoading">
 
     <div class="form-container">
         <p class="title">Login</p>

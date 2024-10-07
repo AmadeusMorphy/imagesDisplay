@@ -12,6 +12,8 @@ export class FriendReqComponent {
     private userService: UserService
   ) {}
 
+  isLoading: boolean = false;
+
   currentUserId: any
   friendReqs: {
     username: string,
@@ -38,6 +40,7 @@ export class FriendReqComponent {
   }
 
   getReqs() {
+    this.isLoading = true;
     this.currentUserId = localStorage.getItem('userId')
 
 
@@ -62,7 +65,11 @@ export class FriendReqComponent {
             id: item.id
           }
         })
+        this.isLoading = false
         console.log(this.friendReqs)
+      }, (error) => {
+        console.log('error stuff: ', error)
+        this.isLoading = false
       }
     )
   }

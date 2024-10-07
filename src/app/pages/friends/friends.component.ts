@@ -13,6 +13,7 @@ export class FriendsComponent {
     private userService: UserService
   ){}
 
+  isLoading: boolean = false;
   friends: {
     id: string,
     username: string,
@@ -20,6 +21,7 @@ export class FriendsComponent {
     email: string,
   }[] = []
   
+  friend: any;
   isClicked: boolean = false;
   ngOnInit(): void {
 
@@ -28,10 +30,12 @@ export class FriendsComponent {
 
   getFriends() {
     
+    this.isLoading = true
     this.currentId = localStorage.getItem('userId')
 
     this.userService.getCurrentUser(this.currentId).subscribe(
       (res: any) => {
+        this.isLoading = false
         console.log('Current user: ', res)
         console.log("friends: ", res.friends)
 
@@ -50,8 +54,11 @@ export class FriendsComponent {
 
   removeFriend(index: number) {
 
+    this.isLoading = true
+
     this.userService.removeFriend(this.currentId, this.friends[index].id).subscribe(
       (res: any) => {
+        this.isLoading = false
         console.log('Friend removed successfully: ', res)
         this.isClicked = true
 
@@ -65,9 +72,18 @@ export class FriendsComponent {
   }
 
   onSendReq(index: number) {
+    this.isLoading = true
 
     if(this.friends[index].id){
-    console.log(this.friends[index])
+    
+      console.log(this.friends[index].id)
+      this.friend = this.userService.getCurrentUser(this.friends[index].id).subscribe(
+        (res: any) => {
+          this.isLoading = false
+          console.log('Your seeing his info: ', res)
+        }
+      )
+
     }
   }
 }

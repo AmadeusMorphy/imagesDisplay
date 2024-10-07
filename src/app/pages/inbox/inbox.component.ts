@@ -8,6 +8,7 @@ import { ChatService } from '../services/chat.service';
 })
 export class InboxComponent implements OnInit {
   users: any[] = [];
+  isLoading: boolean = false;
   inboxUsers: any[] = []; // Filtered users for the inbox (who have exchanged messages)
   friendsList: any[] = []; // Friends list for starting a new chat
   selectedReceiver: any = null;
@@ -35,11 +36,13 @@ export class InboxComponent implements OnInit {
 
   // Get the current logged-in user info and their messages
   getCurrentUser() {
+    this.isLoading = true;
     this.currentUserId = localStorage.getItem('userId');
     this.chatService.getUserById(this.currentUserId).subscribe((res: any) => {
       this.currentUserInfo = res;
       this.getInboxUsers();
       this.getFriendsList(); // Get the friends list
+      this.isLoading = false
     });
   }
 
@@ -62,7 +65,7 @@ export class InboxComponent implements OnInit {
   // Get the friends list from the current user info
   getFriendsList() {
     // Assuming the friends are stored in the currentUserInfo object
-    this.friendsList = this.currentUserInfo.friends || []; // Access the friends property
+    this.friendsList = this.currentUserInfo.friends  || []; // Access the friends property
     console.log('Friends list: ', this.friendsList);
   }
 

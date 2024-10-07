@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 export class LoginComponent {
 
   loginForm: FormGroup;
+  isLoading: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -42,10 +43,12 @@ export class LoginComponent {
 
 
   onLogin() {
+    this.isLoading = true
     const {email, password} = this.loginForm.value;
 
     this.userService.onLogin(email, password).subscribe(
       (res: any) => {
+        this.isLoading = false
         console.log('Successfully logged in: ', res)
         localStorage.setItem('username', res[0].username)
         localStorage.setItem('userId', res[0].id)

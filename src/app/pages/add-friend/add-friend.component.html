@@ -1,6 +1,9 @@
 
+<div class="loading" *ngIf="isLoading">
+<p-progressSpinner ariaLabel="loading" />
+</div>
 
-<div class="body">
+<div class="body" *ngIf="!isLoading">
     <div class="card" *ngFor="let user of users; let i = index">
         <div class="card__img">
             <img src="assets/bgTest2.png" class="bgImg">

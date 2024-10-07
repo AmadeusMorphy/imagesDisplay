@@ -29,6 +29,8 @@ import { AddFriendComponent } from './pages/add-friend/add-friend.component';
 import { InboxComponent } from './pages/inbox/inbox.component';
 import { FieldsetModule } from 'primeng/fieldset';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,7 +50,7 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
     RippleModule, RouterOutlet,SidebarModule,  
     PanelMenuModule, MenuModule, ImageModule,
     FormsModule, ReactiveFormsModule, FieldsetModule,
-    ScrollPanelModule
+    ScrollPanelModule, ProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
