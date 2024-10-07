@@ -174,7 +174,7 @@
 
 .sent-message {
     display: grid;
-    justify-content: end;
+    justify-content: center;
     background-color: #862ebf;
     width: auto;
     max-width: 345px;
@@ -197,6 +197,15 @@
     padding: 10px;
     margin-right: auto;
     margin-bottom: 10px;
+}
+
+.imgMsg {
+    display: flex;
+    justify-content: center;
+}
+
+.imgMsg img {
+    border-radius: 20px;
 }
 
 .inboxList {

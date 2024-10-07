@@ -14,6 +14,8 @@ export class InboxComponent implements OnInit {
   selectedReceiver: any = null;
   currentUserId: any;
   currentUserInfo: any = null;
+  showImageSelection: boolean = false; // To toggle the image selection modal
+selectedImage: string | null = null; 
   newMessage: string = '';
   isMobile: boolean = false;
   showFriendsList: boolean = false; // Variable to toggle friends list visibility
@@ -85,51 +87,69 @@ export class InboxComponent implements OnInit {
     this.showFriendsList = false; // Close the friends list after selecting a user
   }
 
-  // Send a message to the selected receiver
-  sendMessage() {
-    if (!this.selectedReceiver) {
-      console.error('No user selected to send message to');
-      return;
-    }
-
-    const message = {
-      senderId: this.currentUserId,
-      receiverId: this.selectedReceiver.id,
-      content: this.newMessage,
-      timestamp: new Date().toISOString(),
-    };
-
-    // Push the message to the receiver's messages array
-    this.selectedReceiver.messages.push(message);
-
-    // Create a copy of the receiver's messages for the backend update
-    const updatedReceiverData = {
-      ...this.selectedReceiver,
-      messages: [...this.selectedReceiver.messages] // Ensure you are only updating messages
-    };
-
-    // Update the receiver's data in the backend
-    this.chatService.updateUserMessages(this.selectedReceiver.id, updatedReceiverData).subscribe(
-      (res) => {
-        console.log('Message sent to receiver: ', res);
-        // Also update the current user's messages
-        const updatedCurrentUserData = {
-          ...this.currentUserInfo,
-          messages: [...this.currentUserInfo.messages, message] // Update current user's messages
-        };
-
-        this.chatService.updateUserMessages(this.currentUserId, updatedCurrentUserData).subscribe(
-          (res: any) => {
-            console.log('Current user message updated: ', res);
-            this.newMessage = ''; // Clear the input after sending
-          }
-        );
-      },
-      (error) => {
-        console.error('Error updating user messages: ', error);
-      }
-    );
+  openImageSelection() {
+    this.showImageSelection = true;
   }
+  
+  // Close the image selection modal
+  closeImageSelection() {
+    this.showImageSelection = false;
+  }
+  
+  // Handle image selection
+  selectImage(image: string) {
+    this.selectedImage = image;
+    this.showImageSelection = false; // Close the modal after selection
+  }
+
+  // Send a message to the selected receiver
+sendMessage() {
+  if (!this.selectedReceiver) {
+    console.error('No user selected to send message to');
+    return;
+  }
+
+  const message = {
+    senderId: this.currentUserId,
+    receiverId: this.selectedReceiver.id,
+    content: this.newMessage, // Message content
+    timestamp: new Date().toISOString(),
+    image: this.selectedImage // Include the selected image (if any)
+  };
+
+  // Push the message to the receiver's messages array
+  this.selectedReceiver.messages.push(message);
+
+  // Create a copy of the receiver's messages for backend update
+  const updatedReceiverData = {
+    ...this.selectedReceiver,
+    messages: [...this.selectedReceiver.messages]
+  };
+
+  // Update the receiver's data in the backend
+  this.chatService.updateUserMessages(this.selectedReceiver.id, updatedReceiverData).subscribe(
+    (res) => {
+      console.log('Message sent to receiver: ', res);
+      
+      // Also update the current user's messages
+      const updatedCurrentUserData = {
+        ...this.currentUserInfo,
+        messages: [...this.currentUserInfo.messages, message]
+      };
+
+      this.chatService.updateUserMessages(this.currentUserId, updatedCurrentUserData).subscribe(
+        (res: any) => {
+          console.log('Current user message updated: ', res);
+          this.newMessage = ''; // Clear the text input after sending
+          this.selectedImage = null; // Clear the selected image after sending
+        }
+      );
+    },
+    (error) => {
+      console.error('Error updating user messages: ', error);
+    }
+  );
+}
 
   // Filter messages to display only between current user and the selected receiver
   getFilteredMessages() {

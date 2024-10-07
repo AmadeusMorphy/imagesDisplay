@@ -28,18 +28,40 @@
         <!--I want it from here-->
         <div [ngClass]="{'sent-message': message.senderId === currentUserId, 'received-message': message.senderId !== currentUserId}" *ngFor="let message of getFilteredMessages()" >
             <div class="message">
-                <p><strong>{{ message.senderId === currentUserId ? 'You' : selectedReceiver.username }}:</strong> {{ message.content }}</p>
+                <p><strong>{{ message.senderId === currentUserId ? 'You' : selectedReceiver.username }}:</strong> {{ message.content }} <br>
+                </p>
+                <div class="imgMsg"><img [src]="message.image" alt=""></div>
             </div>
             <span>{{ message.timestamp | date: 'short' }}</span>
         </div>
         <!--to here-->
-        
+
         <!-- Send a message -->
-        <div class="send-message">
-            <input type="text" [(ngModel)]="newMessage" (keydown.enter)="sendMessage()" placeholder="Type a message..." />
-            <button (click)="sendMessage()">Send</button>
+       <div class="send-message">
+    <input type="text" [(ngModel)]="newMessage" (keydown.enter)="sendMessage()" placeholder="Type a message..." />
+
+    <!-- Button to open the image selection modal -->
+    <button (click)="openImageSelection()">Select Image</button>
+
+    <!-- Selected Image Preview -->
+    <div *ngIf="selectedImage">
+        <img [src]="selectedImage" alt="Selected Image" class="preview-image" />
+    </div>
+
+    <button (click)="sendMessage()">Send</button>
+</div>
+    </div>
+</div>
+
+<div *ngIf="showImageSelection" class="image-selection-modal">
+    <h3>Select an Image</h3>
+    <div class="image-grid">
+        <!-- Loop through user's images -->
+        <div *ngFor="let image of currentUserInfo.images" class="image-item" (click)="selectImage(image)">
+            <img [src]="image" alt="Image" />
         </div>
     </div>
+    <button (click)="closeImageSelection()">Close</button>
 </div>
 
 <!-- Friends List Modal or Dropdown -->
