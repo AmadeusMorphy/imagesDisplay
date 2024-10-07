@@ -1,5 +1,5 @@
 <div class="loading" *ngIf="isLoading">
-<p-progressSpinner ariaLabel="loading" />
+    <p-progressSpinner ariaLabel="loading" />
 </div>
 
 
@@ -24,32 +24,40 @@
             <h3>Chatting with {{ selectedReceiver.username }}</h3>
         </div>
         <h3 *ngIf="!isMobile">Chatting with {{ selectedReceiver.username }}</h3>
- 
+        
+        <!-- <p-scrollPanel [style]="{ width: 'auto', height: '600px' }" styleClass="custombar1"> -->
         <!--I want it from here-->
-        <div [ngClass]="{'sent-message': message.senderId === currentUserId, 'received-message': message.senderId !== currentUserId}" *ngFor="let message of getFilteredMessages()" >
+        <div class="custom-scrollbar">
+        <div [ngClass]="{'sent-message': message.senderId === currentUserId, 'received-message': message.senderId !== currentUserId}"
+        *ngFor="let message of getFilteredMessages()">
+
             <div class="message">
-                <p><strong>{{ message.senderId === currentUserId ? 'You' : selectedReceiver.username }}:</strong> {{ message.content }} <br>
+                <p><strong>{{ message.senderId === currentUserId ? 'You' : selectedReceiver.username }}:</strong> {{
+                    message.content }} <br>
                 </p>
                 <div class="imgMsg"><img [src]="message.image" alt=""></div>
             </div>
             <span>{{ message.timestamp | date: 'short' }}</span>
         </div>
+    </div>
+    <!-- </p-scrollPanel> -->
         <!--to here-->
 
         <!-- Send a message -->
-       <div class="send-message">
-    <input type="text" [(ngModel)]="newMessage" (keydown.enter)="sendMessage()" placeholder="Type a message..." />
+        <div class="send-message">
+            <input type="text" [(ngModel)]="newMessage" (keydown.enter)="sendMessage()"
+                placeholder="Type a message..." />
 
-    <!-- Button to open the image selection modal -->
-    <button (click)="openImageSelection()">Select Image</button>
+            <!-- Selected Image Preview -->
+            <div *ngIf="selectedImage" style="position: absolute; margin-left: 50%;">
+                <img [src]="selectedImage" alt="Selected Image" class="preview-image" style="height: 32px;" />
+            </div>
+            <!-- Button to open the image selection modal -->
+            <button (click)="openImageSelection()">Select Image</button>
 
-    <!-- Selected Image Preview -->
-    <div *ngIf="selectedImage">
-        <img [src]="selectedImage" alt="Selected Image" class="preview-image" />
-    </div>
 
-    <button (click)="sendMessage()">Send</button>
-</div>
+            <button (click)="sendMessage()">Send</button>
+        </div>
     </div>
 </div>
 
@@ -67,16 +75,16 @@
 <!-- Friends List Modal or Dropdown -->
 <div *ngIf="showFriendsList && !isLoading" class="friends-list-modal">
     <div class="inboxList" style="width: 24%;">
-    <h3>Select a Friend to Chat</h3>
-    <p-button icon="pi pi-times" (onClick)="showFriendsList = false" severity="danger" />
+        <h3>Select a Friend to Chat</h3>
+        <p-button icon="pi pi-times" (onClick)="showFriendsList = false" severity="danger" />
 
     </div>
 
     <div class="newList">
-    <div *ngFor="let friend of friendsList" class="newChat" (click)="startNewChat(friend)">
-        <img [src]="friend.profileImg || 'default-profile.png'" alt="Profile" />
-        <h3 style="margin-left: 10px;">{{ friend.username }}</h3>
+        <div *ngFor="let friend of friendsList" class="newChat" (click)="startNewChat(friend)">
+            <img [src]="friend.profileImg || 'default-profile.png'" alt="Profile" />
+            <h3 style="margin-left: 10px;">{{ friend.username }}</h3>
+        </div>
     </div>
-</div>
 
 </div>
