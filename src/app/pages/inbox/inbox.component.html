@@ -2,6 +2,7 @@
     <!-- User List / Inbox -->
     <div class="user-list" [ngClass]="{'hidden': selectedReceiver}">
         <h3>Inbox</h3>
+        <button class="plus-button" (click)="showFriendsList = true">+</button> <!-- Plus button to start a new chat -->
         <div *ngFor="let user of inboxUsers" class="user" (click)="selectUser(user)">
             <img [src]="user.profileImg || 'default-profile.png'" alt="Profile" />
             <h3>{{ user.username }}</h3>
@@ -28,4 +29,15 @@
             <button (click)="sendMessage()">Send</button>
         </div>
     </div>
+</div>
+
+<!-- Friends List Modal or Dropdown -->
+<div *ngIf="showFriendsList" class="friends-list-modal">
+    <h3>Select a Friend to Chat</h3>
+    <ul>
+        <li *ngFor="let friend of friendsList" (click)="startNewChat(friend)">
+            {{ friend.username }}
+        </li>
+    </ul>
+    <button (click)="showFriendsList = false">Close</button>
 </div>

@@ -38,41 +38,47 @@ export class AddFriendComponent {
   }
 
   
-getCurrentUserAndUsers() {
-  this.currentUserId = localStorage.getItem('userId');
+  getCurrentUserAndUsers() {
+    this.currentUserId = localStorage.getItem('userId');
   
-  this.userService.getCurrentUser(this.currentUserId).pipe(
-    switchMap((res: any) => {
-      this.currentUserInfo = res;
-      console.log('Your logged in as: ', res);
-      this.currentUserBlock.push({
-        username: res.username,
-        profileImg: res.profileImg,
-        email: res.email,
-        id: res.id
-      });
-      return this.userService.getUser(); // Proceed to get users after current user info is fetched
-    })
-  ).subscribe(
-    (res: any) => {
-      console.log(res);
-      const currentUserFriendsIds = this.currentUserInfo?.friends?.map((friend: any) => friend.id) || [];
-
-      // Filter out users who are already friends
-      this.users = res.filter((item: any) => !currentUserFriendsIds.includes(item.id)).map((item: any) => {
-        return {
-          id: item.id,
-          username: item.username,
-          profileImg: item.profileImg
-        };
-      });
-      console.log('Filtered Users:', this.users);
-    },
-    (error) => {
-      console.log('Error:', error);
-    }
-  );
-}
+    this.userService.getCurrentUser(this.currentUserId).pipe(
+      switchMap((res: any) => {
+        this.currentUserInfo = res;
+        console.log('Your logged in as: ', res);
+  
+        // Create a user block for the current user
+        this.currentUserBlock.push({
+          username: res.username,
+          profileImg: res.profileImg,
+          email: res.email,
+          id: res.id
+        });
+  
+        return this.userService.getUser(); // Proceed to get users after current user info is fetched
+      })
+    ).subscribe(
+      (res: any) => {
+        console.log(res);
+        const currentUserFriendsIds = this.currentUserInfo?.friends?.map((friend: any) => friend.id) || [];
+  
+        // Filter out users who are already friends and the current user
+        this.users = res.filter((item: any) => 
+          !currentUserFriendsIds.includes(item.id) && item.id !== this.currentUserId
+        ).map((item: any) => {
+          return {
+            id: item.id,
+            username: item.username,
+            profileImg: item.profileImg
+          };
+        });
+        console.log('Filtered Users:', this.users);
+      },
+      (error) => {
+        console.log('Error:', error);
+      }
+    );
+  }
+  
 
   onSendReq(index: number) {
     this.users[index].isReq = true;

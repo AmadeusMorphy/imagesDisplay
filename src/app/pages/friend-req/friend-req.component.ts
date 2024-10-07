@@ -20,9 +20,16 @@ export class FriendReqComponent {
     id: string,
     isAccept: boolean
   }[] =[]
+  currrentUser!: {
+    username: string,
+    profileImg: string,
+    email: string,
+    id: string,
+  }
 
   selectedUser!: string;
   isAccept: boolean = false;
+  requesterId: any;
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
@@ -33,9 +40,19 @@ export class FriendReqComponent {
   getReqs() {
     this.currentUserId = localStorage.getItem('userId')
 
+
     this.userService.getCurrentUser(this.currentUserId).subscribe(
       (res: any) => {
         console.log('current user: ', res)
+
+        this.currrentUser = {
+          username: res.username,
+          profileImg: res.profileImg[0],
+          email: res.email,
+          id: res.id
+        };
+        
+        this.requesterId = res.friendRequests?.map((item: any) => item.id);
 
         this.friendReqs = res.friendRequests?.map((item: any) => {
           return {
@@ -57,6 +74,12 @@ export class FriendReqComponent {
     this.userService.acceptFriendReq(this.currentUserId, this.friendReqs[index]).subscribe(
       (res: any) => {
         console.log('Friend request accepted: ', res);
+
+        this.userService.acceptFriendReq(this.requesterId, this.currrentUser).subscribe(
+          (res: any) => {
+            console.log('the requester is fiends with u too: ', res)
+          }
+        )
         
         // After accepting, remove the friend request from `friendRequests`
         this.userService.removeFriendReq(this.currentUserId, this.selectedUser).subscribe(

@@ -6,32 +6,32 @@ import { ChatService } from '../services/chat.service';
   templateUrl: './inbox.component.html',
   styleUrls: ['./inbox.component.scss']
 })
-
-
-  export class InboxComponent implements OnInit {
-    users: any[] = [];
+export class InboxComponent implements OnInit {
+  users: any[] = [];
   inboxUsers: any[] = []; // Filtered users for the inbox (who have exchanged messages)
+  friendsList: any[] = []; // Friends list for starting a new chat
   selectedReceiver: any = null;
   currentUserId: any;
   currentUserInfo: any = null;
   newMessage: string = '';
   isMobile: boolean = false;
+  showFriendsList: boolean = false; // Variable to toggle friends list visibility
 
   constructor(private chatService: ChatService) {}
 
   ngOnInit(): void {
     this.getCurrentUser();
     this.checkIfMobile();
-    window.addEventListener('resize', this.checkIfMobile.bind(this)); 
+    window.addEventListener('resize', this.checkIfMobile.bind(this));
   }
 
   checkIfMobile() {
     this.isMobile = window.innerWidth <= 768; // Set to true if the screen width is less than or equal to 768px
-}
+  }
 
-backToInbox() {
+  backToInbox() {
     this.selectedReceiver = null; // Reset selected user
-}
+  }
 
   // Get the current logged-in user info and their messages
   getCurrentUser() {
@@ -39,6 +39,7 @@ backToInbox() {
     this.chatService.getUserById(this.currentUserId).subscribe((res: any) => {
       this.currentUserInfo = res;
       this.getInboxUsers();
+      this.getFriendsList(); // Get the friends list
     });
   }
 
@@ -47,13 +48,22 @@ backToInbox() {
     this.chatService.getUsers().subscribe((allUsers: any[]) => {
       this.inboxUsers = allUsers.filter(user => {
         // Check if the user has exchanged messages with the current user
+        console.log(allUsers)
+        const userName = localStorage.getItem('username')
         return user.messages && user.messages.some((msg: any) =>
-          ((msg.receiverId == this.currentUserId && user.id != this.currentUserId) ||
-          (msg.senderId == this.currentUserId && user.id != this.currentUserId))
+          ((msg.receiverId == this.currentUserId && user.username != userName) ||
+          (msg.senderId == this.currentUserId && user.username != userName))
         );
       });
       console.log('Inbox users: ', this.inboxUsers);
     });
+  }
+
+  // Get the friends list from the current user info
+  getFriendsList() {
+    // Assuming the friends are stored in the currentUserInfo object
+    this.friendsList = this.currentUserInfo.friends || []; // Access the friends property
+    console.log('Friends list: ', this.friendsList);
   }
 
   // Select the receiver to chat with and display messages
@@ -64,6 +74,12 @@ backToInbox() {
     if (!Array.isArray(this.selectedReceiver.messages)) {
       this.selectedReceiver.messages = [];
     }
+  }
+
+  // Method to start a new chat with a selected friend
+  startNewChat(friend: any) {
+    this.selectUser(friend); // Set the selected user to the friend
+    this.showFriendsList = false; // Close the friends list after selecting a user
   }
 
   // Send a message to the selected receiver
