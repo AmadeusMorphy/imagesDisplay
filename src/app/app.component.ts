@@ -1,6 +1,7 @@
 import { Component, HostListener } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { UserService } from './pages/services/user.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -17,7 +18,8 @@ export class AppComponent {
   items!: MenuItem[];
 
   constructor(
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
   ) {}
 
   @HostListener('window:scroll', ['$event'])
@@ -111,7 +113,7 @@ export class AppComponent {
       this.isLoggedIn = false;
       localStorage.removeItem('userId'); // Remove user data
       this.userLoggedIn = false; // Update login status
-      window.location.reload()
+      this.router.navigateByUrl('/login')
     }
   
   

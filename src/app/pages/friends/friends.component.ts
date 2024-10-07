@@ -54,6 +54,12 @@ export class FriendsComponent {
       (res: any) => {
         console.log('Friend removed successfully: ', res)
         this.isClicked = true
+
+        this.userService.removeFriend(this.friends[index].id, this.currentId).subscribe(
+        (res: any) => {
+          console.log('your also removed from their friends list', res)
+        }
+        )
       }
     )
   }
