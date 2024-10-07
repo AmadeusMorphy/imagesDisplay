@@ -15,12 +15,23 @@ import { ChatService } from '../services/chat.service';
   currentUserId: any;
   currentUserInfo: any = null;
   newMessage: string = '';
+  isMobile: boolean = false;
 
   constructor(private chatService: ChatService) {}
 
   ngOnInit(): void {
     this.getCurrentUser();
+    this.checkIfMobile();
+    window.addEventListener('resize', this.checkIfMobile.bind(this)); 
   }
+
+  checkIfMobile() {
+    this.isMobile = window.innerWidth <= 768; // Set to true if the screen width is less than or equal to 768px
+}
+
+backToInbox() {
+    this.selectedReceiver = null; // Reset selected user
+}
 
   // Get the current logged-in user info and their messages
   getCurrentUser() {
