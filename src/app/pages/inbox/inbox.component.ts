@@ -19,12 +19,12 @@ export class InboxComponent implements OnInit {
   currentUserId: any;
   currentUserInfo: any = null;
   showImageSelection: boolean = false; // To toggle the image selection modal
-selectedImage: string | null = null; 
-  newMessage: string = '';
+  selectedImage: string | null = null;
+  newMessage: string | null = null;
   isMobile: boolean = false;
   showFriendsList: boolean = false; // Variable to toggle friends list visibility
 
-  constructor(private chatService: ChatService) {}
+  constructor(private chatService: ChatService) { }
 
   ngOnInit(): void {
     this.getCurrentUser();
@@ -32,20 +32,20 @@ selectedImage: string | null = null;
     window.addEventListener('resize', this.checkIfMobile.bind(this));
   }
   ngAfterViewChecked() {
-    if(this.selectedReceiver) {
-    this.scrollToBottom();
+    if (this.selectedReceiver) {
+      this.scrollToBottom();
     }
   }
   scrollToBottom(): void {
     try {
-        this.chatBody.nativeElement.scrollTo({
-            top: this.chatBody.nativeElement.scrollHeight,
-            behavior: 'smooth' // Add smooth scrolling behavior
-        });
+      this.chatBody.nativeElement.scrollTo({
+        top: this.chatBody.nativeElement.scrollHeight,
+        behavior: 'smooth' // Add smooth scrolling behavior
+      });
     } catch (err) {
-        console.error('Error scrolling:', err);
+      console.error('Error scrolling:', err);
     }
-}
+  }
 
 
   checkIfMobile() {
@@ -76,7 +76,7 @@ selectedImage: string | null = null;
         console.log(allUsers)
         const userName = localStorage.getItem('username')
         return user.messages && user.messages.some((msg: any) =>
-          ((msg.receiverId == this.currentUserId && user.username != userName) ||
+        ((msg.receiverId == this.currentUserId && user.username != userName) ||
           (msg.senderId == this.currentUserId && user.username != userName))
         );
       });
@@ -87,7 +87,7 @@ selectedImage: string | null = null;
   // Get the friends list from the current user info
   getFriendsList() {
     // Assuming the friends are stored in the currentUserInfo object
-    this.friendsList = this.currentUserInfo.friends  || []; // Access the friends property
+    this.friendsList = this.currentUserInfo.friends || []; // Access the friends property
     console.log('Friends list: ', this.friendsList);
   }
 
@@ -110,12 +110,12 @@ selectedImage: string | null = null;
   openImageSelection() {
     this.showImageSelection = true;
   }
-  
+
   // Close the image selection modal
   closeImageSelection() {
     this.showImageSelection = false;
   }
-  
+
   // Handle image selection
   selectImage(image: string) {
     this.selectedImage = image;
@@ -123,53 +123,56 @@ selectedImage: string | null = null;
   }
 
   // Send a message to the selected receiver
-sendMessage() {
-  if (!this.selectedReceiver) {
-    console.error('No user selected to send message to');
-    return;
-  }
-
-  const message = {
-    senderId: this.currentUserId,
-    receiverId: this.selectedReceiver.id,
-    content: this.newMessage, // Message content
-    timestamp: new Date().toISOString(),
-    image: this.selectedImage // Include the selected image (if any)
-  };
-
-  // Push the message to the receiver's messages array
-  this.selectedReceiver.messages.push(message);
-
-  // Create a copy of the receiver's messages for backend update
-  const updatedReceiverData = {
-    ...this.selectedReceiver,
-    messages: [...this.selectedReceiver.messages]
-  };
-
-  // Update the receiver's data in the backend
-  this.chatService.updateUserMessages(this.selectedReceiver.id, updatedReceiverData).subscribe(
-    (res) => {
-      console.log('Message sent to receiver: ', res);
-      
-      // Also update the current user's messages
-      const updatedCurrentUserData = {
-        ...this.currentUserInfo,
-        messages: [...this.currentUserInfo.messages, message]
-      };
-
-      this.chatService.updateUserMessages(this.currentUserId, updatedCurrentUserData).subscribe(
-        (res: any) => {
-          console.log('Current user message updated: ', res);
-          this.newMessage = ''; // Clear the text input after sending
-          this.selectedImage = null; // Clear the selected image after sending
-        }
-      );
-    },
-    (error) => {
-      console.error('Error updating user messages: ', error);
+  sendMessage() {
+    if (!this.selectedReceiver) {
+      console.error('No user selected to send message to');
+      return;
     }
-  );
-}
+
+
+    const message = {
+      senderId: this.currentUserId,
+      receiverId: this.selectedReceiver.id,
+      content: this.newMessage, // Message content
+      timestamp: new Date().toISOString(),
+      image: this.selectedImage // Include the selected image (if any)
+    };
+    this.newMessage = null; // Clear the text input after sending
+
+
+    // Push the message to the receiver's messages array
+    this.selectedReceiver.messages.push(message);
+
+    // Create a copy of the receiver's messages for backend update
+    const updatedReceiverData = {
+      ...this.selectedReceiver,
+      messages: [...this.selectedReceiver.messages]
+    };
+
+    // Update the receiver's data in the backend
+    this.chatService.updateUserMessages(this.selectedReceiver.id, updatedReceiverData).subscribe(
+      (res) => {
+        console.log('Message sent to receiver: ', res);
+
+        // Also update the current user's messages
+        const updatedCurrentUserData = {
+          ...this.currentUserInfo,
+          messages: [...this.currentUserInfo.messages, message]
+        };
+
+        this.chatService.updateUserMessages(this.currentUserId, updatedCurrentUserData).subscribe(
+          (res: any) => {
+            console.log('Current user message updated: ', res);
+
+            this.selectedImage = null;
+          }
+        );
+      },
+      (error) => {
+        console.error('Error updating user messages: ', error);
+      }
+    );
+  }
 
   // Filter messages to display only between current user and the selected receiver
   getFilteredMessages() {

@@ -21,6 +21,10 @@
     height: auto; 
 }
 
+::ng-deep div#pn_id_2 {
+  top: 100% !important;
+}
+
 @media (max-width: 1200px) {
     .imgContainer {
         column-count: 2;

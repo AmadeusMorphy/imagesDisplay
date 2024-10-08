@@ -12,7 +12,8 @@
             <!-- <button class="plus-button" (click)="showFriendsList = true">+</button> -->
         </div>
         <div *ngFor="let user of inboxUsers" class="user" (click)="selectUser(user)">
-            <img [src]="user.profileImg || 'default-profile.png'" alt="Profile" />
+            <img *ngIf="user.profileImg.length > 1" [src]="user.profileImg" alt="Profile" />
+            <img *ngIf="user.profileImg.length == 0" src="assets/bgTest2.png" alt="Profile" />
             <h3>{{ user.username }}</h3>
         </div>
     </div>
@@ -24,16 +25,17 @@
             <h3>Chatting with {{ selectedReceiver.username }}</h3>
         </div>
         <div class="headerDm">
-            <img [src]="selectedReceiver.profileImg" alt="" style="height: 35px; width: 35px; margin-left: 30px;">
-        <h3 *ngIf="!isMobile">Chatting with {{ selectedReceiver.username }}</h3>
-    </div>
+            <img *ngIf="selectedReceiver.profileImg.length > 1" [src]="selectedReceiver.profileImg" alt="" style="height: 35px; width: 35px; margin-left: 30px;">
+            <img *ngIf="selectedReceiver.profileImg.length == 0" src="assets/bgTest2.png" alt="" style="height: 35px; width: 35px; margin-left: 30px;">
+            <h3 *ngIf="!isMobile">Chatting with {{ selectedReceiver.username }}</h3>
+        </div>
         <!-- <p-scrollPanel [style]="{ width: 'auto', height: '600px' }" styleClass="custombar1"> -->
         <!--I want it from here-->
         <div class="custom-scrollbar">
             <div class="chat-body" #chatBody>
 
                 <div [ngClass]="{'sent': message.senderId === currentUserId, 'received': message.senderId !== currentUserId}"
-                *ngFor="let message of getFilteredMessages()" class="message">
+                    *ngFor="let message of getFilteredMessages()" class="message">
 
 
                     <div class="chatMsgs">
@@ -41,7 +43,8 @@
                         <p style="margin-top: 0;">{{
                             message.content }} <br>
                         </p>
-                        <div class="imgMsg" *ngIf="message.image"><p-image [src]="message.image" [preview]="true" alt=""/></div>
+                        <div class="imgMsg" *ngIf="message.image"><p-image [src]="message.image" [preview]="true"
+                                alt="" /></div>
                     </div>
                     <span style="color: rgb(204, 204, 204);">{{ message.timestamp | date: 'hh:MM' }}</span>
                 </div>
@@ -58,14 +61,14 @@
                   <i class="fas fa-paper-plane"></i>
                 </button>
               </div> -->
-    </div>
-    <!-- </p-scrollPanel> -->
+        </div>
+        <!-- </p-scrollPanel> -->
         <!--to here-->
 
         <!-- Send a message -->
         <div class="chat-footer-message">
             <textarea type="text" [(ngModel)]="newMessage" (keydown.enter)="sendMessage()"
-                placeholder="Type a message..." ></textarea>
+                placeholder="Type a message..."></textarea>
 
             <!-- Selected Image Preview -->
             <div *ngIf="selectedImage" style="position: absolute; margin-left: 50%;">
@@ -80,38 +83,27 @@
     </div>
 </div>
 
-<p-dialog 
-    header="Header" 
-    [(visible)]="showImageSelection" 
-    [modal]="true" 
-    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" 
-    [style]="{ width: '50vw' }" 
-    [draggable]="false" 
+<p-dialog header="Header" [(visible)]="showImageSelection" [modal]="true"
+    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [style]="{ width: '50vw' }" [draggable]="false"
     [resizable]="false">
 
-        <h3>Select an Image</h3>
-        <!-- <div class="image-grid">
+    <h3>Select an Image</h3>
+    <!-- <div class="image-grid">
             <div *ngFor="let image of currentUserInfo.images" class="image-item" (click)="selectImage(image)">
                 <img [src]="image" alt="Image" />
             </div>
         </div> -->
-        <div class="imgContainer">
-            <div class="imgs" *ngIf="showImageSelection">
-                <div class="img" *ngFor="let image of currentUserInfo.images">
-                    <p-image [src]="image" alt="Image" width="auto" (click)="selectImage(image)" />
-                </div>
+    <div class="imgContainer">
+        <div class="imgs" *ngIf="showImageSelection">
+            <div class="img" *ngFor="let image of currentUserInfo.images">
+                <p-image [src]="image" alt="Image" width="auto" (click)="selectImage(image)" />
             </div>
         </div>
+    </div>
 </p-dialog>
 
-<p-dialog 
-    *ngIf="showFriendsList && !isLoading"
-    header="Header" 
-    [(visible)]="showFriendsList" 
-    [modal]="true" 
-    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" 
-    [style]="{ width: '50vw' }" 
-    [draggable]="false" 
+<p-dialog *ngIf="showFriendsList && !isLoading" header="Header" [(visible)]="showFriendsList" [modal]="true"
+    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [style]="{ width: '50vw' }" [draggable]="false"
     [resizable]="false">
 
     <div class="newList">
