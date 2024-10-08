@@ -41,7 +41,7 @@
                         <p>{{
                             message.content }} <br>
                         </p>
-                        <div class="imgMsg"><img [src]="message.image" alt=""></div>
+                        <div class="imgMsg"><p-image [src]="message.image" [preview]="true" alt=""/></div>
                     </div>
                     <span>{{ message.timestamp | date: 'short' }}</span>
                 </div>
