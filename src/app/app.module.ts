@@ -33,6 +33,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { DialogModule } from 'primeng/dialog';
 import { ChatComponent } from './pages/chat/chat.component';
 import { ChangeDetectorRef } from '@angular/core';
+import { SelectButtonModule } from 'primeng/selectbutton';
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,7 +54,8 @@ import { ChangeDetectorRef } from '@angular/core';
     RippleModule, RouterOutlet,SidebarModule,  
     PanelMenuModule, MenuModule, ImageModule,
     FormsModule, ReactiveFormsModule, FieldsetModule,
-    ScrollPanelModule, ProgressSpinnerModule, DialogModule
+    ScrollPanelModule, ProgressSpinnerModule, DialogModule,
+    SelectButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

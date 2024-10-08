@@ -284,14 +284,12 @@
 
 .imgContainer {
   padding-top: 100px;
-  column-gap: 10px;
+
 }
 
 
 .imgContainer {
   column-count: 3;
-  padding-left: 100px;
-  padding-right: 100px;
 }
 
 .img {
@@ -304,6 +302,7 @@
   border-radius: 15px;
   width: 100%;
   height: auto;
+  max-height: 300px;
 }
 
 @media (max-width: 1200px) {

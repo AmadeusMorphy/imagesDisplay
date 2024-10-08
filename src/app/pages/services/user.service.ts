@@ -13,7 +13,8 @@ export class UserService {
 
 
   private apiUrl = 'https://66fbddf48583ac93b40d8ce0.mockapi.io/users/login'
-  private userApi = 'https://66fbddf48583ac93b40d8ce0.mockapi.io/users/users'
+  private imgApi = 'https://api.unsplash.com/photos/?client_id=i8e1hfdKCsN8sqrdHQJobjZ_ecsjg7po0QWv0gaxRCE'
+
   getUser(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}`)
   }
@@ -70,5 +71,9 @@ export class UserService {
         return this.http.put<any>(`${this.apiUrl}/${userId}`, { friends });
       })
     );
+  }
+
+  getImages(): Observable<any> {
+    return this.http.get<any>(this.imgApi)
   }
 }

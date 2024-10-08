@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ChatService } from '../services/chat.service';
 import { debounceTime } from 'rxjs';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-inbox',
@@ -12,6 +13,20 @@ export class InboxComponent implements OnInit {
   @ViewChild('chatBody') private chatBody!: ElementRef;
 
 
+  stateOptions: any[] = [
+    { 
+      label: 'Fav Images', 
+      value: 'favImgs'
+    },
+    { 
+      label: 'Fav Videos', 
+      value: 'favVideos'
+    }
+  ];
+
+  value: string = 'favImgs';
+  isFavImages: boolean = true;
+  isFavVideos: boolean = false;
   users: any[] = [];
   isLoading: boolean = false;
   inboxUsers: any[] = []; // Filtered users for the inbox (who have exchanged messages)
@@ -24,12 +39,18 @@ export class InboxComponent implements OnInit {
   newMessage: string | null = null;
   isMobile: boolean = false;
   showFriendsList: boolean = false; // Variable to toggle friends list visibility
+  image: {
+    urls: string
+  }[] = [];
 
-  constructor(private chatService: ChatService) { }
+  constructor(
+    private chatService: ChatService,
+    private userService: UserService) { }
 
   ngOnInit(): void {
     this.getCurrentUser();
     this.checkIfMobile();
+    this.getImgs()
     window.addEventListener('resize', this.checkIfMobile.bind(this));
   }
   ngAfterViewChecked() {
@@ -37,6 +58,33 @@ export class InboxComponent implements OnInit {
       this.scrollToBottom();
     }
   }
+
+  onSelectionChange(value: string) {
+    if (value === 'favImgs') {
+      this.showfavImgs();
+      this.isFavVideos = false
+    } else if(value === 'favVideos') {
+      this.isFavImages = false; // Reset if another option is selected
+      this.isFavVideos = true
+    }
+  }
+
+  getImgs(){
+    this.userService.getImages().subscribe(
+      (res: any) => {
+        this.image = res.map((item: any) => {
+          return {
+            urls: item.urls.full
+          }
+        })
+      }
+    )
+  }
+  
+  showfavImgs() {
+    this.isFavImages = true;
+  }
+
   scrollToBottom(): void {
     try {
       this.chatBody.nativeElement.scrollTo({
@@ -81,7 +129,7 @@ export class InboxComponent implements OnInit {
           (msg.senderId == this.currentUserId && user.username != userName))
         );
       });
-      console.log('Inbox users: ', this.inboxUsers);
+      console.log('Inbox users: ', this.inboxUsers[0]);
     });
   }
 
