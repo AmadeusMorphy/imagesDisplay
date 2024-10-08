@@ -37,13 +37,13 @@
 
 
                     <div class="chatMsgs">
-                        <p><strong *ngIf="message.senderId === selectedReceiver.id">{{ selectedReceiver.username }}</strong> </p>
-                        <p>{{
+                        <!-- <p><strong *ngIf="message.senderId === selectedReceiver.id">{{ selectedReceiver.username }}</strong> </p> -->
+                        <p style="margin-top: 0;">{{
                             message.content }} <br>
                         </p>
-                        <div class="imgMsg"><p-image [src]="message.image" [preview]="true" alt=""/></div>
+                        <div class="imgMsg" *ngIf="message.image"><p-image [src]="message.image" [preview]="true" alt=""/></div>
                     </div>
-                    <span>{{ message.timestamp | date: 'short' }}</span>
+                    <span style="color: rgb(204, 204, 204);">{{ message.timestamp | date: 'hh:MM' }}</span>
                 </div>
 
             </div>
