@@ -13,7 +13,7 @@
   </div>
 
   <div class="chat-body" #chatBody *ngIf="selectedReceiver">
-    <div *ngFor="let message of getFilteredMessages()" [ngClass]="{'sent': message.senderId === currentUserId, 'received': message.senderId !== currentUserId}" class="message">
+    <div [ngClass]="{'sent': message.senderId === currentUserId, 'received': message.senderId !== currentUserId}" *ngFor="let message of getFilteredMessages()"  class="message">
       {{ message.content }}
       
       <!-- Reaction Buttons -->

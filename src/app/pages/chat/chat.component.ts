@@ -107,16 +107,7 @@ export class ChatComponent {
       );
 
       // Simulate a reply (optional)
-      setTimeout(() => {
-        this.messages.push({
-          content: 'This is a reply from the user.',
-          type: 'received',
-          reactions: []
-        });
-        this.scrollToBottom();
-      }, 1000);
-      
-      this.newMessage = ''; // Clear the input field
+  // Clear the input field
     }
   }
 
@@ -162,17 +153,13 @@ export class ChatComponent {
     ( msg.receiverId === this.currentUserId),
   );
 }
-getFilteredMessages() {
-  const selectedReceiverMessages = this.selectedReceiver.messages.filter((msg: any) =>
-    (msg.senderId === this.currentUserId) ||
-    (msg.receiverId === this.currentUserId)
-  );
 
-  const currentUserMessages = this.currentUserInfo.messages.filter((msg: any) =>
-    (msg.senderId === this.selectedReceiver.id)
-  );
+  getFilteredMessages() {
+    return this.selectedReceiver.messages.filter((msg: any) =>
+      (msg.senderId === this.currentUserId && msg.receiverId === this.selectedReceiver.id) ||
+      (msg.senderId === this.selectedReceiver.id && msg.receiverId === this.currentUserId)
+    );
+  }
 
-  return selectedReceiverMessages.concat(currentUserMessages);
-}
 
 }

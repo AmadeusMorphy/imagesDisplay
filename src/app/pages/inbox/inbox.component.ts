@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ChatService } from '../services/chat.service';
 
 @Component({
@@ -7,6 +7,10 @@ import { ChatService } from '../services/chat.service';
   styleUrls: ['./inbox.component.scss']
 })
 export class InboxComponent implements OnInit {
+
+  @ViewChild('chatBody') private chatBody!: ElementRef;
+
+
   users: any[] = [];
   isLoading: boolean = false;
   inboxUsers: any[] = []; // Filtered users for the inbox (who have exchanged messages)
@@ -27,6 +31,17 @@ selectedImage: string | null = null;
     this.checkIfMobile();
     window.addEventListener('resize', this.checkIfMobile.bind(this));
   }
+  ngAfterViewChecked() {
+    this.scrollToBottom();
+  }
+  scrollToBottom(): void {
+    try {
+      this.chatBody.nativeElement.scrollTop = this.chatBody.nativeElement.scrollHeight;
+    } catch (err) {
+      console.error('Error scrolling:', err);
+    }
+  }
+
 
   checkIfMobile() {
     this.isMobile = window.innerWidth <= 768; // Set to true if the screen width is less than or equal to 768px

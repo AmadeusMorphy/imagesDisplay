@@ -1,7 +1,7 @@
 .chat-container {
     display: flex;
     height: 100%;
-    margin-top: 120px;
+    margin-top: 100px;
     
     // Inbox styling for larger screens
     .user-list {
@@ -304,4 +304,271 @@
     }
 }
 
+  
+// chat.component.scss
+
+$primary-color: #1e1e2f; // Dark primary background
+$secondary-color: #2b2b3c; // Dark secondary (header and footer)
+$accent-color: #9b59b6; // Dark purple accent color
+$light-text: #ffffff; // White text
+$dim-text: #cccccc; // Dimmed text for placeholders
+$border-color: #3c3c5c; // Border color
+$sent-message-bg: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%); // Gradient for sent messages
+$received-message-bg: #3a3a5c; // Solid color for received messages
+$input-bg: #2e2e4d; // Input background
+$button-hover-bg: darken($accent-color, 10%);
+
+.chat-container {
+  display: flex;
+  background-color: $primary-color;
+  color: $light-text;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.chat-header {
+  background-color: $secondary-color;
+  padding: 15px 20px;
+  text-align: center;
+  font-weight: bold;
+  border-bottom: 1px solid $border-color;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  h3 {
+    margin: 0;
+    font-size: 1.2rem;
+  }
+
+  /* Optional: Add a back button or user avatar */
+  .header-actions {
+    display: flex;
+    align-items: center;
+
+    .back-button {
+      background: none;
+      border: none;
+      color: $light-text;
+      font-size: 1.2rem;
+      cursor: pointer;
+      margin-right: 10px;
+
+      &:hover {
+        color: $dim-text;
+      }
+    }
+
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: $accent-color;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1rem;
+      color: $light-text;
+    }
+  }
+}
+
+.chat-body {
+  flex-grow: 1;
+  padding: 10px 20px;
+  overflow-y: auto;
+  background-color: $primary-color;
+  display: flex;
+  flex-direction: column;
+}
+
+.message {
+  max-width: 70%;
+  padding: 12px 16px;
+  margin: 8px 0;
+  border-radius: 20px;
+  font-size: 16px;
+  position: relative;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.3s ease-in-out;
+
+  &.sent {
+    background: $sent-message-bg;
+    margin-left: auto;
+    color: $light-text;
+    border-bottom-right-radius: 0;
+  }
+
+  &.received {
+    background: $received-message-bg;
+    margin-right: auto;
+    color: $light-text;
+    border-bottom-left-radius: 0;
+  }
+
+  /* Reaction button container */
+  .reactions {
+    display: none; /* Hidden by default */
+    position: absolute;
+    bottom: -35px;
+    right: 0;
+    background-color: $secondary-color;
+    padding: 5px 10px;
+    border-radius: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    display: flex;
+    gap: 5px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  &:hover .reactions {
+    display: flex;
+    opacity: 1;
+  }
+
+  /* Emojis as buttons */
+  .reactions button {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: transform 0.2s;
+
+    &:hover {
+      transform: scale(1.3);
+    }
+  }
+}
+
+.chat-footer-message {
+  display: flex;
+}
+.chat-footer {
+  background-color: $secondary-color;
+  padding: 15px 20px;
+  display: flex;
+  position: sticky;
+  bottom: 0;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid $border-color;
+}
+
+input[type="text"] {
+  flex-grow: 1;
+  padding: 12px 20px;
+  background-color: $input-bg;
+  border-radius: 30px;
+  border: 1px solid $border-color;
+  outline: none;
+  font-size: 16px;
+  color: $light-text;
+  margin-right: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: border-color 0.3s, box-shadow 0.3s;
+
+  &::placeholder {
+    color: $dim-text;
+  }
+
+  &:focus {
+    border-color: $accent-color;
+    box-shadow: 0 2px 8px rgba(155, 89, 182, 0.5);
+  }
+}
+
+button.send-button {
+  padding: 12px;
+  background-color: $accent-color;
+  border: none;
+  border-radius: 50%;
+  color: $light-text;
+  cursor: pointer;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s, box-shadow 0.3s;
+
+  &:hover {
+    background-color: $button-hover-bg;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Optional: Use an icon */
+  i {
+    pointer-events: none;
+  }
+}
+
+/* Message fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .message {
+    max-width: 85%;
+  }
+
+  button.send-button {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+
+  .chat-header h3 {
+    font-size: 1rem;
+  }
+
+  input[type="text"] {
+    font-size: 14px;
+  }
+}
+
+
+// Add to chat.component.scss
+
+.message-reactions {
+    margin-top: 5px;
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+  
+    .reaction {
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 2px 6px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+    }
+  }
+  
+
+  .reactions button {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: transform 0.2s, color 0.2s;
+  
+    &:hover {
+      transform: scale(1.3);
+      color: lighten($accent-color, 20%);
+    }
+  }
   
