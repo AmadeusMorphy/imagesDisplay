@@ -32,6 +32,7 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { DialogModule } from 'primeng/dialog';
 import { ChatComponent } from './pages/chat/chat.component';
+import { ChangeDetectorRef } from '@angular/core';
 @NgModule({
   declarations: [
     AppComponent,

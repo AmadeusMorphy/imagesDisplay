@@ -2,7 +2,9 @@
 
 <div class="chat-container">
   <div class="chat-header">
-    <h3>Chat with [User]</h3>
+    <h3>Chat with {{selectedReceiver?.username}}</h3>
+    <p-button icon="pi pi-plus" (onClick)="showFriendsList = true" severity="help" />
+
     <div class="header-actions">
       <!-- Optional: Add a back button or user avatar -->
       <button class="back-button">&larr;</button>
@@ -10,8 +12,8 @@
     </div>
   </div>
 
-  <div class="chat-body" #chatBody>
-    <div *ngFor="let message of messages" [ngClass]="message.type" class="message">
+  <div class="chat-body" #chatBody *ngIf="selectedReceiver">
+    <div *ngFor="let message of getFilteredMessages()" [ngClass]="{'sent': message.senderId === currentUserId, 'received': message.senderId !== currentUserId}" class="message">
       {{ message.content }}
       
       <!-- Reaction Buttons -->
@@ -22,10 +24,9 @@
         <button (click)="addReaction(message, '😮')">😮</button>
         <button (click)="addReaction(message, '😢')">😢</button>
       </div>
-      
       <!-- Display Reactions -->
-      <div class="message-reactions" *ngIf="message.reactions.length > 0">
-        <span *ngFor="let reaction of message.reactions" class="reaction">{{ reaction }}</span>
+      <div class="message-reactions">
+        <span *ngFor="let reaction of message.reactions">{{ reaction }}</span>
       </div>
     </div>
   </div>
@@ -42,3 +43,22 @@
     </button>
   </div>
 </div>
+
+
+<p-dialog 
+    *ngIf="showFriendsList"
+    header="Header" 
+    [(visible)]="showFriendsList" 
+    [modal]="true" 
+    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" 
+    [style]="{ width: '50vw' }" 
+    [draggable]="false" 
+    [resizable]="false">
+
+    <div class="newList">
+        <div *ngFor="let friend of friendsList" class="newChat" (click)="startNewChat(friend)">
+            <img [src]="friend.profileImg || 'default-profile.png'" alt="Profile" />
+            <h3 style="margin-left: 10px;">{{ friend.username }}</h3>
+        </div>
+    </div>
+</p-dialog>
