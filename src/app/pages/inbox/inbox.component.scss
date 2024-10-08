@@ -101,7 +101,7 @@
     .send-message {
       display: flex;
 
-      input {
+      textarea {
         flex-grow: 1;
         padding: 10px;
         font-size: 14px;
@@ -462,7 +462,7 @@ align-items: center;
 border-top: 1px solid $border-color;
 }
 
-input[type="text"] {
+textarea[type="text"] {
 flex-grow: 1;
 padding: 12px 20px;
 background-color: $input-bg;
@@ -472,6 +472,10 @@ outline: none;
 font-size: 16px;
 color: $light-text;
 margin-right: 15px;
+resize: none; 
+overflow-y: auto;
+overflow: hidden;
+height: 45px;
 margin-left: 15px;
 box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 transition: border-color 0.3s, box-shadow 0.3s;
@@ -541,7 +545,7 @@ button.send-button {
   font-size: 1rem;
 }
 
-input[type="text"] {
+textarea[type="text"] {
   font-size: 14px;
 }
 }

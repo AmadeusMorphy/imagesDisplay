@@ -64,8 +64,8 @@
 
         <!-- Send a message -->
         <div class="chat-footer-message">
-            <input type="text" [(ngModel)]="newMessage" (keydown.enter)="sendMessage()"
-                placeholder="Type a message..." />
+            <textarea type="text" [(ngModel)]="newMessage" (keydown.enter)="sendMessage()"
+                placeholder="Type a message..." ></textarea>
 
             <!-- Selected Image Preview -->
             <div *ngIf="selectedImage" style="position: absolute; margin-left: 50%;">
