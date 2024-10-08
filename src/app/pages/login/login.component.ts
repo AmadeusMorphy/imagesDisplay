@@ -50,6 +50,7 @@ export class LoginComponent {
       (res: any) => {
         this.isLoading = false
         console.log('Successfully logged in: ', res)
+        localStorage.setItem('currentUser', res)
         localStorage.setItem('username', res[0].username)
         localStorage.setItem('userId', res[0].id)
         console.log(localStorage)

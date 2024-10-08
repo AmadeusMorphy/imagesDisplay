@@ -179,6 +179,10 @@ export class InboxComponent implements OnInit {
     }
 
 
+    if (!this.newMessage || this.newMessage.trim() === '') {
+      console.log('You can\'t send nothing or only spaces');
+      return;
+  } else{ 
     const message = {
       senderId: this.currentUserId,
       receiverId: this.selectedReceiver.id,
@@ -220,7 +224,9 @@ export class InboxComponent implements OnInit {
       (error) => {
         console.error('Error updating user messages: ', error);
       }
-    );
+    );}
+
+
   }
 
   // Filter messages to display only between current user and the selected receiver
