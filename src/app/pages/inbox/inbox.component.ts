@@ -32,7 +32,9 @@ selectedImage: string | null = null;
     window.addEventListener('resize', this.checkIfMobile.bind(this));
   }
   ngAfterViewChecked() {
+    if(this.selectedReceiver) {
     this.scrollToBottom();
+    }
   }
   scrollToBottom(): void {
     try {

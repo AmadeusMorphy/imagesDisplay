@@ -1,314 +1,314 @@
 .chat-container {
-    display: flex;
-    height: 100%;
-    margin-top: 100px;
-    
-    // Inbox styling for larger screens
-    .user-list {
-      width: 25%; // 25% for larger screens
-      border-right: 1px solid #ccc;
-      padding: 10px;
-      overflow-y: auto;
+  display: flex;
+  height: 100%;
+  margin-top: 100px;
   
-      h3 {
-        margin-bottom: 10px;
-      }
-  
-      .user {
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        padding: 10px;
-        transition: background-color 0.3s;
-  
-        img {
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          margin-right: 10px;
-        }
-  
-        p {
-          margin: 0;
-          color: black !important;
-        }
-  
-        &:hover {
-          background-color: #f0f0f0;
-        }
-      }
+  // Inbox styling for larger screens
+  .user-list {
+    width: 25%; // 25% for larger screens
+    border-right: 1px solid #ccc;
+    padding: 10px;
+    overflow-y: auto;
+
+    h3 {
+      margin-bottom: 10px;
     }
-  
-    // Chat window styling
-    .chat-window {
-      width: 75%; // 75% for larger screens
+
+    .user {
+      cursor: pointer;
       display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-  
-      .chat-header {
-        display: flex;
-        align-items: center;
-        margin-top: 10px;
-  
-        .back-button {
-          margin-right: 10px;
-          background-color: #007bff;
-          color: white;
-          border: none;
-          border-radius: 4px;
-          cursor: pointer;
-          padding: 5px 10px;
-  
-          &:hover {
-            background-color: #0056b3;
-          }
-        }
+      align-items: center;
+      padding: 10px;
+      transition: background-color 0.3s;
+
+      img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 10px;
       }
-  
-      h3 {
-        margin-bottom: 20px;
+
+      p {
+        margin: 0;
+        color: black !important;
       }
-  
-      .messages {
-        flex-grow: 1;
-        overflow-y: auto;
-        margin-bottom: 20px;
-        width: auto;
-        max-width: 230px;
-    
-        .message {
-            margin-bottom: 10px;
-            padding: 10px;
-            background-color: #e0e0e0;
-            border-radius: 5px;
-    
-            p {
-                margin: 0;
-                color: black;
-            }
-    
-            span {
-                display: block;
-                font-size: 12px;
-                color: #666;
-            }
-        }
-    
-        // Styles for messages sent by the current user (align to the right
+
+      &:hover {
+        background-color: #f0f0f0;
+      }
     }
-  
-      .send-message {
-        display: flex;
-  
-        input {
-          flex-grow: 1;
-          padding: 10px;
-          font-size: 14px;
-          border: 1px solid #ccc;
-          border-radius: 4px;
-          margin-right: 10px;
+  }
+
+  // Chat window styling
+  .chat-window {
+    width: 75%; // 75% for larger screens
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .chat-header {
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
+
+      .back-button {
+        margin-right: 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        padding: 5px 10px;
+
+        &:hover {
+          background-color: #0056b3;
         }
+      }
+    }
+
+    h3 {
+      margin-bottom: 20px;
+    }
+
+    .messages {
+      flex-grow: 1;
+      overflow-y: auto;
+      margin-bottom: 20px;
+      width: auto;
+      max-width: 230px;
   
-        button {
-          padding: 10px 20px;
-          background-color: #007bff;
-          color: white;
-          border: none;
-          border-radius: 4px;
-          cursor: pointer;
+      .message {
+          margin-bottom: 10px;
+          padding: 10px;
+          background-color: #e0e0e0;
+          border-radius: 5px;
   
-          &:hover {
-            background-color: #0056b3;
+          p {
+              margin: 0;
+              color: black;
           }
+  
+          span {
+              display: block;
+              font-size: 12px;
+              color: #666;
+          }
+      }
+  
+      // Styles for messages sent by the current user (align to the right
+  }
+
+    .send-message {
+      display: flex;
+
+      input {
+        flex-grow: 1;
+        padding: 10px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        margin-right: 10px;
+      }
+
+      button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #0056b3;
         }
       }
     }
   }
+}
+
+@media (max-width: 768px) {
+  .chat-container {
+      flex-direction: column; // Stack elements for mobile view
+      margin-top: 87px; // Reduce top margin
+      justify-content: center;
+      display: flex;
+      align-items: center;
+  }
+
+  .chat-window {
+      width: 100% !important;
+  }
+
+  .user-list {
+      width: 100% !important;
+  }
+
+  .chat-header {
+      justify-content: end;
+      position: fixed;
+      background-color: #3f0057;
+      width: 100%;
+      padding: 10px;
+  }
   
-  @media (max-width: 768px) {
-    .chat-container {
-        flex-direction: column; // Stack elements for mobile view
-        margin-top: 87px; // Reduce top margin
-        justify-content: center;
-        display: flex;
-        align-items: center;
-    }
 
-    .chat-window {
-        width: 100% !important;
-    }
+  .chat-window {
+      width: 100%; // Make chat window full width on mobile
 
-    .user-list {
-        width: 100% !important;
-    }
+      .chat-header {
+          display: flex;
+          justify-content: space-between;
+      }
+  }
 
-    .chat-header {
-        justify-content: end;
-        position: fixed;
-        background-color: #3f0057;
-        width: 100%;
-        padding: 10px;
-    }
-    
-
-    .chat-window {
-        width: 100%; // Make chat window full width on mobile
-
-        .chat-header {
-            display: flex;
-            justify-content: space-between;
-        }
-    }
-
-    // Add a class to hide user list
-    .hidden {
-        display: none; // Define a class to hide the user list when needed
-    }
+  // Add a class to hide user list
+  .hidden {
+      display: none; // Define a class to hide the user list when needed
+  }
 }
 
 .sent-message {
-    display: grid;
-    justify-content: center;
-    background-color: #862ebf;
-    margin-left: auto;
-    border-radius: 20px;
-    max-width: 300px !important;
-    padding: 0 5% 10px;
-    margin-bottom: 10px;
+  display: grid;
+  justify-content: center;
+  background-color: #862ebf;
+  margin-left: auto;
+  border-radius: 20px;
+  max-width: 300px !important;
+  padding: 0 5% 10px;
+  margin-bottom: 10px;
 }
 
 // Styles for messages received from others (keep the default styling)
 .received-message {
-    display: grid;
-    justify-content: start;
-    background-color: #eae0ff;
-    margin-top: 10px;
-    border-radius: 25px;
-    max-width: 300px !important;
-    color: black;
-    padding: 10px;
-    margin-right: auto !important;
-    margin-bottom: 10px;
+  display: grid;
+  justify-content: start;
+  background-color: #eae0ff;
+  margin-top: 10px;
+  border-radius: 25px;
+  max-width: 300px !important;
+  color: black;
+  padding: 10px;
+  margin-right: auto !important;
+  margin-bottom: 10px;
 }
 
 .imgMsg {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .imgMsg img {
-    width: 98%;
-    border-radius: 20px;
+  width: 98%;
+  border-radius: 20px;
 }
 
 .inboxList {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .newChat {
-    display: flex;
-    align-items: center;
-    margin-left: 20px;
-    padding: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    border-radius: 40px;
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  border-radius: 40px;
 }
 
 .newChat:hover {
-    background-color: #ccc;
+  background-color: #ccc;
 }
 .newList {
-    width: 25%;
+  width: 25%;
 }
 .newChat img {
-    height: 30px;
-    border-radius: 100px;
+  height: 30px;
+  border-radius: 100px;
 }
 
 
 
 .custom-scrollbar {
-    width: 100%;
-    height: 700px;
-    overflow-y: auto; /* Enables vertical scrolling */
-    padding: 10px; /* Add padding for scrollbar */
-    scrollbar-width: thin; /* Firefox: Thin scrollbar */
-    scrollbar-color: #888 transparent; /* Firefox: Custom scrollbar color */
-    display: grid;
-  }
+  width: 100%;
+  height: 700px;
+  overflow-y: auto; /* Enables vertical scrolling */
+  padding: 10px; /* Add padding for scrollbar */
+  scrollbar-width: thin; /* Firefox: Thin scrollbar */
+  scrollbar-color: #888 transparent; /* Firefox: Custom scrollbar color */
+  display: grid;
+}
 
-  ::ng-deep i.pi.pi-send{
-    font-size: 23px;
-  }
-  
-  @media (max-width: 768px) {
-    
-    .custom-scrollbar {
-        height: 677px;
-    }
-  }
-  /* For Webkit browsers like Chrome, Safari */
-  .custom-scrollbar::-webkit-scrollbar {
-    width: 8px; /* Scrollbar width */
-  }
-  
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    background-color: #888; /* Scrollbar color */
-    border-radius: 10px; /* Scrollbar thumb rounded corners */
-  }
-  
-  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background-color: #555; /* Scrollbar color on hover */
-  }
-  
-  .custom-scrollbar::-webkit-scrollbar-track {
-    background-color: transparent; /* Background color behind scrollbar */
-  }
+::ng-deep i.pi.pi-send{
+  font-size: 23px;
+}
 
+@media (max-width: 768px) {
+  
+  .custom-scrollbar {
+      height: 677px;
+  }
+}
+/* For Webkit browsers like Chrome, Safari */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px; /* Scrollbar width */
+}
 
-  .imgContainer {
-    padding-top: 100px;
-    column-gap: 10px;
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #888; /* Scrollbar color */
+  border-radius: 10px; /* Scrollbar thumb rounded corners */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Scrollbar color on hover */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background-color: transparent; /* Background color behind scrollbar */
 }
 
 
 .imgContainer {
-    column-count: 3; 
-    padding-left: 100px;
-    padding-right: 100px;
+  padding-top: 100px;
+  column-gap: 10px;
+}
+
+
+.imgContainer {
+  column-count: 3; 
+  padding-left: 100px;
+  padding-right: 100px;
 }
 
 .img {
-    break-inside: avoid;
-    margin-bottom: 10px;
-    cursor: pointer;
+  break-inside: avoid;
+  margin-bottom: 10px;
+  cursor: pointer;
 }
 
 ::ng-deep img {
-    border-radius: 15px;
-    width: 100%;
-    height: auto; 
+  border-radius: 15px;
+  width: 100%;
+  height: auto; 
 }
 
 @media (max-width: 1200px) {
-    .imgContainer {
-        column-count: 2;
-    }
+  .imgContainer {
+      column-count: 2;
+  }
 }
 
 @media (max-width: 768px) {
-    .imgContainer {
-        column-count: 1;
-        padding-right: 50px;
-        padding-left: 50px;
-    }
+  .imgContainer {
+      column-count: 1;
+      padding-right: 50px;
+      padding-left: 50px;
+  }
 }
 
-  
+
 // chat.component.scss
 
 $primary-color: #1e1e2f; // Dark primary background
@@ -323,264 +323,264 @@ $input-bg: #2e2e4d; // Input background
 $button-hover-bg: darken($accent-color, 10%);
 
 .chat-container {
-  display: flex;
-  background-color: $primary-color;
-  color: $light-text;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+display: flex;
+background-color: $primary-color;
+color: $light-text;
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .chat-header {
-  background-color: $secondary-color;
-  padding: 15px 20px;
-  text-align: center;
-  font-weight: bold;
-  border-bottom: 1px solid $border-color;
-  position: sticky;
-  top: 0;
-  z-index: 10;
+background-color: $secondary-color;
+padding: 15px 20px;
+text-align: center;
+font-weight: bold;
+border-bottom: 1px solid $border-color;
+position: sticky;
+top: 0;
+z-index: 10;
+display: flex;
+align-items: center;
+justify-content: space-between;
+
+h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+/* Optional: Add a back button or user avatar */
+.header-actions {
   display: flex;
   align-items: center;
-  justify-content: space-between;
 
-  h3 {
-    margin: 0;
+  .back-button {
+    background: none;
+    border: none;
+    color: $light-text;
     font-size: 1.2rem;
+    cursor: pointer;
+    margin-right: 10px;
+
+    &:hover {
+      color: $dim-text;
+    }
   }
 
-  /* Optional: Add a back button or user avatar */
-  .header-actions {
+  .user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: $accent-color;
     display: flex;
     align-items: center;
-
-    .back-button {
-      background: none;
-      border: none;
-      color: $light-text;
-      font-size: 1.2rem;
-      cursor: pointer;
-      margin-right: 10px;
-
-      &:hover {
-        color: $dim-text;
-      }
-    }
-
-    .user-avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background-color: $accent-color;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      font-size: 1rem;
-      color: $light-text;
-    }
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1rem;
+    color: $light-text;
   }
+}
 }
 
 .chat-body {
-  flex-grow: 1;
-  padding: 10px 20px;
-  overflow-y: auto;
-  background-color: $primary-color;
-  display: flex;
-  flex-direction: column;
+flex-grow: 1;
+padding: 10px 20px;
+overflow-y: auto;
+background-color: $primary-color;
+display: flex;
+flex-direction: column;
 }
 
 .message {
-  max-width: 70%;
-  padding: 12px 16px;
-  margin: 8px 0;
+max-width: 70%;
+padding: 12px 16px;
+margin: 8px 0;
+border-radius: 20px;
+font-size: 16px;
+position: relative;
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+animation: fadeIn 0.3s ease-in-out;
+
+&.sent {
+  background: $sent-message-bg;
+  margin-left: auto;
+  color: $light-text;
+  border-bottom-right-radius: 0;
+}
+
+&.received {
+  background: $received-message-bg;
+  margin-right: auto;
+  color: $light-text;
+  border-bottom-left-radius: 0;
+}
+
+/* Reaction button container */
+.reactions {
+  display: none; /* Hidden by default */
+  position: absolute;
+  bottom: -35px;
+  right: 0;
+  background-color: $secondary-color;
+  padding: 5px 10px;
   border-radius: 20px;
-  font-size: 16px;
-  position: relative;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-  animation: fadeIn 0.3s ease-in-out;
+  display: flex;
+  gap: 5px;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
 
-  &.sent {
-    background: $sent-message-bg;
-    margin-left: auto;
-    color: $light-text;
-    border-bottom-right-radius: 0;
+&:hover .reactions {
+  display: flex;
+  opacity: 1;
+}
+
+/* Emojis as buttons */
+.reactions button {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: scale(1.3);
   }
-
-  &.received {
-    background: $received-message-bg;
-    margin-right: auto;
-    color: $light-text;
-    border-bottom-left-radius: 0;
-  }
-
-  /* Reaction button container */
-  .reactions {
-    display: none; /* Hidden by default */
-    position: absolute;
-    bottom: -35px;
-    right: 0;
-    background-color: $secondary-color;
-    padding: 5px 10px;
-    border-radius: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-    display: flex;
-    gap: 5px;
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-  }
-
-  &:hover .reactions {
-    display: flex;
-    opacity: 1;
-  }
-
-  /* Emojis as buttons */
-  .reactions button {
-    background: none;
-    border: none;
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: transform 0.2s;
-
-    &:hover {
-      transform: scale(1.3);
-    }
-  }
+}
 }
 
 .chat-footer-message {
-  display: flex;
+display: flex;
 }
 .chat-footer {
-  background-color: $secondary-color;
-  padding: 15px 20px;
-  display: flex;
-  position: sticky;
-  bottom: 0;
-  justify-content: space-between;
-  align-items: center;
-  border-top: 1px solid $border-color;
+background-color: $secondary-color;
+padding: 15px 20px;
+display: flex;
+position: sticky;
+bottom: 0;
+justify-content: space-between;
+align-items: center;
+border-top: 1px solid $border-color;
 }
 
 input[type="text"] {
-  flex-grow: 1;
-  padding: 12px 20px;
-  background-color: $input-bg;
-  border-radius: 30px;
-  border: 1px solid $border-color;
-  outline: none;
-  font-size: 16px;
-  color: $light-text;
-  margin-right: 15px;
-  margin-left: 15px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  transition: border-color 0.3s, box-shadow 0.3s;
+flex-grow: 1;
+padding: 12px 20px;
+background-color: $input-bg;
+border-radius: 30px;
+border: 1px solid $border-color;
+outline: none;
+font-size: 16px;
+color: $light-text;
+margin-right: 15px;
+margin-left: 15px;
+box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+transition: border-color 0.3s, box-shadow 0.3s;
 
-  &::placeholder {
-    color: $dim-text;
-  }
+&::placeholder {
+  color: $dim-text;
+}
 
-  &:focus {
-    border-color: $accent-color;
-    box-shadow: 0 2px 8px rgba(155, 89, 182, 0.5);
-  }
+&:focus {
+  border-color: $accent-color;
+  box-shadow: 0 2px 8px rgba(155, 89, 182, 0.5);
+}
 }
 
 button.send-button {
-  padding: 12px;
-  background-color: $accent-color;
-  border: none;
-  border-radius: 50%;
-  color: $light-text;
-  cursor: pointer;
-  font-size: 1.2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 50px;
-  height: 50px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s, box-shadow 0.3s;
+padding: 12px;
+background-color: $accent-color;
+border: none;
+border-radius: 50%;
+color: $light-text;
+cursor: pointer;
+font-size: 1.2rem;
+display: flex;
+align-items: center;
+justify-content: center;
+width: 50px;
+height: 50px;
+box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+transition: background-color 0.3s, box-shadow 0.3s;
 
-  &:hover {
-    background-color: $button-hover-bg;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-  }
+&:hover {
+  background-color: $button-hover-bg;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
 
-  /* Optional: Use an icon */
-  i {
-    pointer-events: none;
-  }
+/* Optional: Use an icon */
+i {
+  pointer-events: none;
+}
 }
 
 /* Message fade-in animation */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+from {
+  opacity: 0;
+  transform: translateY(10px);
+}
+to {
+  opacity: 1;
+  transform: translateY(0);
+}
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-  .message {
-    max-width: 85%;
-  }
+.message {
+  max-width: 85%;
+}
 
-  button.send-button {
-    width: 40px;
-    height: 40px;
-    font-size: 1rem;
-  }
+button.send-button {
+  width: 40px;
+  height: 40px;
+  font-size: 1rem;
+}
 
-  .chat-header h3 {
-    font-size: 1rem;
-  }
+.chat-header h3 {
+  font-size: 1rem;
+}
 
-  input[type="text"] {
-    font-size: 14px;
-  }
+input[type="text"] {
+  font-size: 14px;
+}
 }
 
 
 // Add to chat.component.scss
 
 .message-reactions {
-    margin-top: 5px;
-    display: flex;
-    gap: 5px;
-    flex-wrap: wrap;
-  
-    .reaction {
-      background-color: rgba(255, 255, 255, 0.1);
-      padding: 2px 6px;
-      border-radius: 12px;
-      font-size: 0.9rem;
-    }
-  }
-  
+  margin-top: 5px;
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
 
-  .reactions button {
-    background: none;
-    border: none;
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: transform 0.2s, color 0.2s;
-  
-    &:hover {
-      transform: scale(1.3);
-      color: lighten($accent-color, 20%);
-    }
+  .reaction {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 2px 6px;
+    border-radius: 12px;
+    font-size: 0.9rem;
   }
-  
-  .headerDm {
-    display: flex; 
-    align-items: center; 
-    gap: 30px;
-    background-color: rgba(15, 15, 15, 0.288);
+}
+
+
+.reactions button {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: transform 0.2s, color 0.2s;
+
+  &:hover {
+    transform: scale(1.3);
+    color: lighten($accent-color, 20%);
   }
+}
+
+.headerDm {
+  display: flex; 
+  align-items: center; 
+  gap: 30px;
+  background-color: rgba(15, 15, 15, 0.288);
+}
 

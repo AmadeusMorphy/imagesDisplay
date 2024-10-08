@@ -41,7 +41,7 @@
                         <p>{{
                             message.content }} <br>
                         </p>
-                        <!-- <div class="imgMsg"><img [src]="message.image" alt=""></div> -->
+                        <div class="imgMsg"><img [src]="message.image" alt=""></div>
                     </div>
                     <span>{{ message.timestamp | date: 'short' }}</span>
                 </div>
@@ -96,8 +96,7 @@
             </div>
         </div> -->
         <div class="imgContainer">
-            <div class="imgs">
-        
+            <div class="imgs" *ngIf="showImageSelection">
                 <div class="img" *ngFor="let image of currentUserInfo.images">
                     <p-image [src]="image" alt="Image" width="auto" (click)="selectImage(image)" />
                 </div>
