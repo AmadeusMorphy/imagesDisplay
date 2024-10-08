@@ -67,7 +67,7 @@
 
         <!-- Send a message -->
         <div class="chat-footer-message">
-            <textarea type="text" [(ngModel)]="newMessage" (keydown.enter)="sendMessage()"
+            <textarea type="text" [(ngModel)]="newMessage" (keyup.enter)="sendMessage(); $event.preventDefault()"
                 placeholder="Type a message..."></textarea>
 
             <!-- Selected Image Preview -->
