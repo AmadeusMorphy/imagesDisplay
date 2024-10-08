@@ -59,6 +59,11 @@ export class AppComponent {
                 routerLink: '/inbox'
               },
               {
+                label: 'Chat',
+                icon: 'pi pi-inbox',
+                routerLink: '/chat'
+              },
+              {
                 label: 'Friends',
                 icon: 'pi pi-users',
                 routerLink: '/friends'

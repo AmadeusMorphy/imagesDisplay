@@ -1,0 +1,44 @@
+<!-- chat.component.html -->
+
+<div class="chat-container">
+  <div class="chat-header">
+    <h3>Chat with [User]</h3>
+    <div class="header-actions">
+      <!-- Optional: Add a back button or user avatar -->
+      <button class="back-button">&larr;</button>
+      <div class="user-avatar">U</div>
+    </div>
+  </div>
+
+  <div class="chat-body" #chatBody>
+    <div *ngFor="let message of messages" [ngClass]="message.type" class="message">
+      {{ message.content }}
+      
+      <!-- Reaction Buttons -->
+      <div class="reactions">
+        <button (click)="addReaction(message, '👍')">👍</button>
+        <button (click)="addReaction(message, '❤️')">❤️</button>
+        <button (click)="addReaction(message, '😂')">😂</button>
+        <button (click)="addReaction(message, '😮')">😮</button>
+        <button (click)="addReaction(message, '😢')">😢</button>
+      </div>
+      
+      <!-- Display Reactions -->
+      <div class="message-reactions" *ngIf="message.reactions.length > 0">
+        <span *ngFor="let reaction of message.reactions" class="reaction">{{ reaction }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="chat-footer">
+    <input
+      type="text"
+      placeholder="Type a message..."
+      [(ngModel)]="newMessage"
+      (keyup.enter)="sendMessage()"
+    />
+    <button class="send-button" (click)="sendMessage()">
+      <i class="fas fa-paper-plane"></i>
+    </button>
+  </div>
+</div>

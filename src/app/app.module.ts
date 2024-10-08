@@ -31,6 +31,7 @@ import { FieldsetModule } from 'primeng/fieldset';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { DialogModule } from 'primeng/dialog';
+import { ChatComponent } from './pages/chat/chat.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,6 +42,7 @@ import { DialogModule } from 'primeng/dialog';
     FriendsComponent,
     AddFriendComponent,
     InboxComponent,
+    ChatComponent,
 
   ],
   imports: [

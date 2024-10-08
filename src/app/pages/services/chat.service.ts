@@ -24,4 +24,13 @@ export class ChatService {
   updateUserMessages(userId: string, userData: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/${userId}`, userData);
   }
+
+    // Optionally, a method to fetch messages between two users
+    getMessagesBetweenUsers(senderId: string, receiverId: string): Observable<any[]> {
+      return this.http.get<any[]>(`${this.apiUrl}/messages/conversation/${senderId}/${receiverId}`);
+    }
+
+    sendMessage(senderId: string, receiverId: string, message: any): Observable<any> {
+      return this.http.post<any>(`${this.apiUrl}/messages`, { senderId, receiverId, ...message });
+    }
 }

@@ -4,20 +4,17 @@
 
 
 <div class="chat-container" *ngIf="!isLoading">
-    <!-- User List / Inbox -->
     <div class="user-list" [ngClass]="{'hidden': selectedReceiver}">
         <div class="inboxList">
             <h3>Inbox</h3>
             <p-button icon="pi pi-plus" (onClick)="showFriendsList = true" severity="help" />
-            <!-- <button class="plus-button" (click)="showFriendsList = true">+</button> -->
-        </div>
+      </div>
         <div *ngFor="let user of inboxUsers" class="user" (click)="selectUser(user)">
             <img [src]="user.profileImg || 'default-profile.png'" alt="Profile" />
             <h3>{{ user.username }}</h3>
         </div>
     </div>
 
-    <!-- Chat Window -->
     <div class="chat-window" *ngIf="selectedReceiver">
         <div class="chat-header" *ngIf="isMobile">
             <button class="back-button" (click)="backToInbox()">Back</button>
@@ -25,8 +22,7 @@
         </div>
         <h3 *ngIf="!isMobile">Chatting with {{ selectedReceiver.username }}</h3>
         
-        <!-- <p-scrollPanel [style]="{ width: 'auto', height: '600px' }" styleClass="custombar1"> -->
-        <!--I want it from here-->
+  
         <div class="custom-scrollbar">
         <div [ngClass]="{'sent-message': message.senderId === currentUserId, 'received-message': message.senderId !== currentUserId}"
         *ngFor="let message of getFilteredMessages()">
@@ -40,19 +36,14 @@
             <span>{{ message.timestamp | date: 'short' }}</span>
         </div>
     </div>
-    <!-- </p-scrollPanel> -->
-        <!--to here-->
 
-        <!-- Send a message -->
         <div class="send-message">
             <input type="text" [(ngModel)]="newMessage" (keydown.enter)="sendMessage()"
                 placeholder="Type a message..." />
 
-            <!-- Selected Image Preview -->
             <div *ngIf="selectedImage" style="position: absolute; margin-left: 50%;">
                 <img [src]="selectedImage" alt="Selected Image" class="preview-image" style="height: 32px;" />
-            </div>
-            <!-- Button to open the image selection modal -->
+            </div>=
             <button (click)="openImageSelection()">Select Image</button>
 
 
@@ -71,11 +62,7 @@
     [resizable]="false">
 
         <h3>Select an Image</h3>
-        <!-- <div class="image-grid">
-            <div *ngFor="let image of currentUserInfo.images" class="image-item" (click)="selectImage(image)">
-                <img [src]="image" alt="Image" />
-            </div>
-        </div> -->
+
         <div class="imgContainer">
             <div class="imgs">
         

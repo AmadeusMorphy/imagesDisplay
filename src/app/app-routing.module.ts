@@ -7,6 +7,7 @@ import { FriendsComponent } from './pages/friends/friends.component';
 import { FriendReqComponent } from './pages/friend-req/friend-req.component';
 import { AddFriendComponent } from './pages/add-friend/add-friend.component';
 import { InboxComponent } from './pages/inbox/inbox.component';
+import { ChatComponent } from './pages/chat/chat.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -16,7 +17,8 @@ const routes: Routes = [
   {path: 'friends', component: FriendsComponent},
   {path: 'friendReq', component: FriendReqComponent},
   {path: 'addFriend', component: AddFriendComponent},
-  {path: 'inbox', component: InboxComponent}
+  {path: 'inbox', component: InboxComponent},
+  {path: 'chat', component: ChatComponent}
 ];
 
 @NgModule({
