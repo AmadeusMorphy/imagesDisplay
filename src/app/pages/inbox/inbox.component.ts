@@ -36,11 +36,14 @@ selectedImage: string | null = null;
   }
   scrollToBottom(): void {
     try {
-      this.chatBody.nativeElement.scrollTop = this.chatBody.nativeElement.scrollHeight;
+        this.chatBody.nativeElement.scrollTo({
+            top: this.chatBody.nativeElement.scrollHeight,
+            behavior: 'smooth' // Add smooth scrolling behavior
+        });
     } catch (err) {
-      console.error('Error scrolling:', err);
+        console.error('Error scrolling:', err);
     }
-  }
+}
 
 
   checkIfMobile() {

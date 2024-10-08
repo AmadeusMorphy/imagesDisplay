@@ -23,8 +23,10 @@
             <button class="back-button" (click)="backToInbox()">Back</button>
             <h3>Chatting with {{ selectedReceiver.username }}</h3>
         </div>
+        <div class="headerDm">
+            <img [src]="selectedReceiver.profileImg" alt="" style="height: 35px; width: 35px; margin-left: 30px;">
         <h3 *ngIf="!isMobile">Chatting with {{ selectedReceiver.username }}</h3>
-        
+    </div>
         <!-- <p-scrollPanel [style]="{ width: 'auto', height: '600px' }" styleClass="custombar1"> -->
         <!--I want it from here-->
         <div class="custom-scrollbar">
@@ -32,12 +34,14 @@
 
                 <div [ngClass]="{'sent': message.senderId === currentUserId, 'received': message.senderId !== currentUserId}"
                 *ngFor="let message of getFilteredMessages()" class="message">
-        
-                    <div >
-                        <p><strong>{{ message.senderId === currentUserId ? 'You' : selectedReceiver.username }}:</strong> {{
+
+
+                    <div class="chatMsgs">
+                        <p><strong *ngIf="message.senderId === selectedReceiver.id">{{ selectedReceiver.username }}</strong> </p>
+                        <p>{{
                             message.content }} <br>
                         </p>
-                        <div class="imgMsg"><img [src]="message.image" alt=""></div>
+                        <!-- <div class="imgMsg"><img [src]="message.image" alt=""></div> -->
                     </div>
                     <span>{{ message.timestamp | date: 'short' }}</span>
                 </div>
@@ -68,10 +72,10 @@
                 <img [src]="selectedImage" alt="Selected Image" class="preview-image" style="height: 32px;" />
             </div>
             <!-- Button to open the image selection modal -->
-            <button (click)="openImageSelection()">Select Image</button>
+            <button (click)="openImageSelection()" class="send-button"> <i class="pi pi-plus"></i></button>
 
 
-            <button class="send-button" (click)="sendMessage()">Send</button>
+            <button class="send-button" (click)="sendMessage()"><i class="pi pi-send"></i></button>
         </div>
     </div>
 </div>

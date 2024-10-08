@@ -240,11 +240,15 @@
     scrollbar-color: #888 transparent; /* Firefox: Custom scrollbar color */
     display: grid;
   }
+
+  ::ng-deep i.pi.pi-send{
+    font-size: 23px;
+  }
   
   @media (max-width: 768px) {
     
     .custom-scrollbar {
-        height: 800px;
+        height: 677px;
     }
   }
   /* For Webkit browsers like Chrome, Safari */
@@ -468,6 +472,7 @@ input[type="text"] {
   font-size: 16px;
   color: $light-text;
   margin-right: 15px;
+  margin-left: 15px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   transition: border-color 0.3s, box-shadow 0.3s;
 
@@ -572,3 +577,10 @@ button.send-button {
     }
   }
   
+  .headerDm {
+    display: flex; 
+    align-items: center; 
+    gap: 30px;
+    background-color: rgba(15, 15, 15, 0.288);
+  }
+
