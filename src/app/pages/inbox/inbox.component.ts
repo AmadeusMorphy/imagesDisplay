@@ -1,5 +1,6 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ChatService } from '../services/chat.service';
+import { debounceTime } from 'rxjs';
 
 @Component({
   selector: 'app-inbox',
@@ -70,7 +71,7 @@ export class InboxComponent implements OnInit {
 
   // Filter users who have exchanged messages with the current user
   getInboxUsers() {
-    this.chatService.getUsers().subscribe((allUsers: any[]) => {
+    this.chatService.getUsers().pipe(debounceTime(300)).subscribe((allUsers: any[]) => {
       this.inboxUsers = allUsers.filter(user => {
         // Check if the user has exchanged messages with the current user
         console.log(allUsers)
