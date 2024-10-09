@@ -50,7 +50,7 @@ export class FriendReqComponent {
 
         this.currrentUser = {
           username: res.username,
-          profileImg: res.profileImg[0],
+          profileImg: res.profileImg,
           email: res.email,
           id: res.id
         };
@@ -60,7 +60,7 @@ export class FriendReqComponent {
         this.friendReqs = res.friendRequests?.map((item: any) => {
           return {
             username: item.username,
-            profileImg: item.profileImg[0],
+            profileImg: item.profileImg,
             email: item.email,
             id: item.id
           }

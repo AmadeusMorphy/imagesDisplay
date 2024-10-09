@@ -148,17 +148,19 @@ export class InboxComponent implements OnInit {
   // Select the receiver to chat with and display messages
   selectUser(user: any) {
     this.selectedReceiver = user;
-
     // Ensure the selected user has messages or initialize an empty array
     if (!Array.isArray(this.selectedReceiver.messages)) {
       this.selectedReceiver.messages = [];
     }
+    this.getInboxUsers()
   }
 
   // Method to start a new chat with a selected friend
   startNewChat(friend: any) {
     this.selectUser(friend); // Set the selected user to the friend
-    this.showFriendsList = false; // Close the friends list after selecting a user
+    this.showFriendsList = false;
+    this.getInboxUsers()
+
   }
 
   openImageSelection() {
@@ -218,7 +220,6 @@ export class InboxComponent implements OnInit {
   
           // Also update the current user's messages
           const updatedCurrentUserData = {
-            ...this.currentUserInfo,
             messages: [...this.currentUserInfo.messages, message]
           };
   
@@ -235,6 +236,8 @@ export class InboxComponent implements OnInit {
         }
       );
     }
+    this.getInboxUsers()
+
   }
   
 
