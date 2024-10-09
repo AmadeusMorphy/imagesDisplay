@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { UserService } from '../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-friends',
@@ -10,7 +11,8 @@ export class FriendsComponent {
 
   currentId: any;
   constructor(
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
   ){}
 
   isLoading: boolean = false;
@@ -71,11 +73,13 @@ export class FriendsComponent {
     )
   }
 
-  onSendReq(index: number) {
+  onViewFriend(index: number) {
     this.isLoading = true
 
     if(this.friends[index].id){
     
+      localStorage.setItem('currentFriend', this.friends[index].id)
+
       console.log(this.friends[index].id)
       this.friend = this.userService.getCurrentUser(this.friends[index].id).subscribe(
         (res: any) => {
@@ -84,6 +88,8 @@ export class FriendsComponent {
         }
       )
 
+
+      this.router.navigateByUrl('/users-profile')
     }
   }
 }

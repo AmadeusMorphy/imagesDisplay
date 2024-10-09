@@ -22,17 +22,29 @@ export class UsersProfileComponent {
   getFriend() {
     this.isLoading = true;
     this.friendId = localStorage.getItem('currentFriend');
-
+  
     this.userService.getCurrentUser(this.friendId).subscribe(
       (res: any) => {
         console.log('Current friend info: ', res);
+        // Convert the DateJoined timestamp to a readable date
+        const dateJoined = new Date(res.DateJoined * 1000); // Multiply by 1000 to convert seconds to milliseconds
+        const options: Intl.DateTimeFormatOptions = {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit', // Optional: if you want to include timezone
+        };
+        const formattedDateJoined = dateJoined.toLocaleString('en-US', options); // Adjust the locale as needed
+  
         // Assign the response data to friendInfo
         this.friendInfo = {
           username: res.username,
           email: res.email,
           profileImg: res.profileImg,
           friends: res.friends,
-          DateJoined: res.DateJoined
+          DateJoined: formattedDateJoined // Use the formatted date
         };
         this.isLoading = false;
         console.log('Logging friend info:', this.friendInfo);
@@ -43,4 +55,5 @@ export class UsersProfileComponent {
       }
     );
   }
+  
 }
