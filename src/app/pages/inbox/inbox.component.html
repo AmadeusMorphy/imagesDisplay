@@ -12,8 +12,8 @@
             <!-- <button class="plus-button" (click)="showFriendsList = true">+</button> -->
         </div>
         <div *ngFor="let user of inboxUsers" class="user" (click)="selectUser(user)">
-            <img *ngIf="user.profileImg.length == 1" [src]="user.profileImg" alt="Profile" />
-            <img *ngIf="user.profileImg.length == 0" src="assets/bgTest2.png" alt="Profile" />
+            <img [src]="user.profileImg" alt="Profile" />
+            <!-- <img *ngIf="user.profileImg.length == 0" src="assets/bgTest2.png" alt="Profile" /> -->
             <h3>{{ user.username }}</h3>
         </div>
     </div>
@@ -22,12 +22,12 @@
     <div class="chat-window" *ngIf="selectedReceiver">
         <div class="chat-header" *ngIf="isMobile">
             <button class="back-button" (click)="backToInbox()">Back</button>
-            <h3>Chatting with {{ selectedReceiver.username }}</h3>
+            <h3>{{ selectedReceiver.username }}</h3>
         </div>
         <div class="headerDm">
-            <img *ngIf="selectedReceiver.profileImg.length == 1" [src]="selectedReceiver.profileImg" alt="" style="height: 35px; width: 35px; margin-left: 30px;">
-            <img *ngIf="selectedReceiver.profileImg.length == 0" src="assets/bgTest2.png" alt="" style="height: 35px; width: 35px; margin-left: 30px;">
-            <h3 *ngIf="!isMobile">Chatting with {{ selectedReceiver.username }}</h3>
+            <img [src]="selectedReceiver.profileImg" alt="" style="cursor: pointer;" style="height: 35px; width: 35px; margin-left: 30px;">
+            <!-- <img *ngIf="selectedReceiver.profileImg.length == 0" src="assets/bgTest2.png" alt="" style="height: 35px; width: 35px; margin-left: 30px;"> -->
+            <h3 *ngIf="!isMobile" routerLink="/users-profile" style="cursor: pointer;">{{ selectedReceiver.username }}</h3>
         </div>
         <!-- <p-scrollPanel [style]="{ width: 'auto', height: '600px' }" styleClass="custombar1"> -->
         <!--I want it from here-->

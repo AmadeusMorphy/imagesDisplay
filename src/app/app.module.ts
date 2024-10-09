@@ -34,6 +34,7 @@ import { DialogModule } from 'primeng/dialog';
 import { ChatComponent } from './pages/chat/chat.component';
 import { ChangeDetectorRef } from '@angular/core';
 import { SelectButtonModule } from 'primeng/selectbutton';
+import { UsersProfileComponent } from './pages/users-profile/users-profile.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,6 +46,7 @@ import { SelectButtonModule } from 'primeng/selectbutton';
     AddFriendComponent,
     InboxComponent,
     ChatComponent,
+    UsersProfileComponent,
 
   ],
   imports: [

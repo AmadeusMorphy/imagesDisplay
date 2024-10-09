@@ -57,6 +57,9 @@ export class InboxComponent implements OnInit {
   }
   ngAfterViewChecked() {
     if (this.selectedReceiver) {
+      console.log('his data: ',this.selectedReceiver)
+      localStorage.setItem('currentFriend', this.selectedReceiver.id)
+      console.log('current friend: ', localStorage.getItem('currentFriend'))
       this.scrollToBottom();
     }
   }
@@ -191,7 +194,7 @@ export class InboxComponent implements OnInit {
         timestamp: new Date().toISOString(),
         image: this.selectedImage, // Include the selected image (if any)
         isSending: true, // Set isSending to true when message is created
-        isSent: false // Initially, message is not sent
+        isSent: true // Initially, message is not sent
       };
       
       this.newMessage = null; // Clear the text input after sending

@@ -1,0 +1,28 @@
+<div class="loading" *ngIf="isLoading">
+    <p-progressSpinner ariaLabel="loading" />
+</div>
+
+<div class="profileCard" *ngIf="!isLoading">
+    <div class="profileItems">
+        <div class="profilePic">
+            <img *ngIf="!friendInfo.profileImg || friendInfo.profileImg.length === 0" src="assets/bgTest2.png">
+            <img *ngIf="friendInfo.profileImg && friendInfo.profileImg.length > 0" [src]="friendInfo.profileImg">
+        </div>
+
+        <div class="userName">
+            <h2>{{friendInfo.username}}</h2>
+        </div>
+
+        <div class="userInfo">
+            <div class="dateUser">
+                <p>Joined at: <br><br> {{friendInfo.DateJoined}}</p>
+            </div>
+            <div class="videos">
+                <p>Videos saved: </p>
+            </div>
+            <div class="images">
+                <p>Images saved: </p>
+            </div>
+        </div>
+    </div>
+</div>
