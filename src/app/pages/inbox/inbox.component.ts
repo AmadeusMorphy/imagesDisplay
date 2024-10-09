@@ -38,7 +38,9 @@ export class InboxComponent implements OnInit {
   selectedImage: string | null = null;
   newMessage: string | null = null;
   isMobile: boolean = false;
-  showFriendsList: boolean = false; // Variable to toggle friends list visibility
+  showFriendsList: boolean = false; 
+  isSending: boolean = false;
+  isSent: boolean = false;
   image: {
     urls: string
   }[] = [];
@@ -177,57 +179,61 @@ export class InboxComponent implements OnInit {
       console.error('No user selected to send message to');
       return;
     }
-
-
+  
     if (!this.newMessage || this.newMessage.trim() === '') {
       console.log('You can\'t send nothing or only spaces');
       return;
-  } else{ 
-    const message = {
-      senderId: this.currentUserId,
-      receiverId: this.selectedReceiver.id,
-      content: this.newMessage, // Message content
-      timestamp: new Date().toISOString(),
-      image: this.selectedImage // Include the selected image (if any)
-    };
-    this.newMessage = null; // Clear the text input after sending
-
-
-    // Push the message to the receiver's messages array
-    this.selectedReceiver.messages.push(message);
-
-    // Create a copy of the receiver's messages for backend update
-    const updatedReceiverData = {
-      ...this.selectedReceiver,
-      messages: [...this.selectedReceiver.messages]
-    };
-
-    // Update the receiver's data in the backend
-    this.chatService.updateUserMessages(this.selectedReceiver.id, updatedReceiverData).subscribe(
-      (res) => {
-        console.log('Message sent to receiver: ', res);
-
-        // Also update the current user's messages
-        const updatedCurrentUserData = {
-          ...this.currentUserInfo,
-          messages: [...this.currentUserInfo.messages, message]
-        };
-
-        this.chatService.updateUserMessages(this.currentUserId, updatedCurrentUserData).subscribe(
-          (res: any) => {
-            console.log('Current user message updated: ', res);
-
-            this.selectedImage = null;
-          }
-        );
-      },
-      (error) => {
-        console.error('Error updating user messages: ', error);
-      }
-    );}
-
-
+    } else {
+      const message = {
+        senderId: this.currentUserId,
+        receiverId: this.selectedReceiver.id,
+        content: this.newMessage, // Message content
+        timestamp: new Date().toISOString(),
+        image: this.selectedImage, // Include the selected image (if any)
+        isSending: true, // Set isSending to true when message is created
+        isSent: false // Initially, message is not sent
+      };
+      
+      this.newMessage = null; // Clear the text input after sending
+  
+      // Push the message to the receiver's messages array
+      this.selectedReceiver.messages.push(message);
+  
+      // Simulate sending the message to the backend
+      const updatedReceiverData = {
+        ...this.selectedReceiver,
+        messages: [...this.selectedReceiver.messages]
+      };
+  
+      this.chatService.updateUserMessages(this.selectedReceiver.id, updatedReceiverData).subscribe(
+        (res) => {
+          console.log('Message sent to receiver: ', res);
+  
+          // Mark the message as sent
+          message.isSending = true; // Sending is done
+          message.isSent = true; // Message has been successfully sent
+  
+          // Also update the current user's messages
+          const updatedCurrentUserData = {
+            ...this.currentUserInfo,
+            messages: [...this.currentUserInfo.messages, message]
+          };
+  
+          this.chatService.updateUserMessages(this.currentUserId, updatedCurrentUserData).subscribe(
+            (res: any) => {
+              console.log('Current user message updated: ', res);
+              this.selectedImage = null;
+              this.isSent = true
+            }
+          );
+        },
+        (error) => {
+          console.error('Error updating user messages: ', error);
+        }
+      );
+    }
   }
+  
 
   // Filter messages to display only between current user and the selected receiver
   getFilteredMessages() {
