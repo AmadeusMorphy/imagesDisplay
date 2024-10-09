@@ -29,13 +29,12 @@
             <!-- <img *ngIf="selectedReceiver.profileImg.length == 0" src="assets/bgTest2.png" alt="" style="height: 35px; width: 35px; margin-left: 30px;"> -->
             <h3 *ngIf="!isMobile" routerLink="/users-profile" style="cursor: pointer;">{{ selectedReceiver.username }}</h3>
         </div>
-        <!-- <p-scrollPanel [style]="{ width: 'auto', height: '600px' }" styleClass="custombar1"> -->
-        <!--I want it from here-->
+
         <div class="custom-scrollbar">
             <div class="chat-body" #chatBody>
         
                 <div [ngClass]="{'sent': message.senderId === currentUserId, 'received': message.senderId !== currentUserId}"
-                *ngFor="let message of getFilteredMessages()" class="message">
+                *ngFor="let message of getFilteredMessages()" class="message" (mouseenter)="hoveredMessage = message" (mouseleave)="hoveredMessage = null">
                 
                 <div class="chatMsgs">
                     <p style="margin-top: 0;">
@@ -43,46 +42,44 @@
                     </p>
                     <div class="imgMsg" *ngIf="message.image">
                         <p-image [src]="message.image" [preview]="true" alt="" />
-                    </div>
-                </div>
-                
+                        </div>
+                        
+                        <div class="reactions">
+                            <button (click)="addReaction(message, '👍')">👍</button>
+                            <button (click)="addReaction(message, '❤️')">❤️</button>
+                            <button (click)="addReaction(message, '😂')">😂</button>
+                            <button (click)="addReaction(message, '😮')">😮</button>
+                            <button (click)="addReaction(message, '😢')">😢</button>
+                          </div>
+                          <!-- Display Reactions -->
+                        </div>
                 <div class="msgStatus" style="display: flex; justify-content: end; height: 32px;">
                     <div class="bottom">
                         <span style="color: rgb(204, 204, 204);">{{ message.timestamp | date: 'hh:MM' }}</span>
                         <div class="sent" style="display: grid;">
-                            <!-- Show sending status for each message -->
+
                             <i class="pi pi-check" *ngIf="message.isSending" style="position: absolute; top: 66px;"></i>
                             <i class="pi pi-check" *ngIf="message.isSent"></i>
                         </div>
+                        <div class="message-reactions" *ngFor="let reaction of message.reactions">
+                            <span style="    background-color: gray;
+    border-radius: 100px;">{{ reaction.emoji }}</span>
+                          </div>
                     </div>
                 </div>
             </div>
             </div>
-            <!-- <div class="chat-footer">
-                <input
-                  type="text"
-                  placeholder="Type a message..."
-                  [(ngModel)]="newMessage"
-                  (keyup.enter)="sendMessage()"
-                />
-                <button class="send-button" (click)="sendMessage()">
-                  <i class="fas fa-paper-plane"></i>
-                </button>
-              </div> -->
         </div>
-        <!-- </p-scrollPanel> -->
-        <!--to here-->
 
-        <!-- Send a message -->
         <div class="chat-footer-message">
             <textarea type="text" [(ngModel)]="newMessage" (keyup.enter)="sendMessage(); $event.preventDefault()"
                 placeholder="Type a message..."></textarea>
 
-            <!-- Selected Image Preview -->
+
             <div *ngIf="selectedImage" style="position: absolute; margin-left: 50%;">
                 <img [src]="selectedImage" alt="Selected Image" class="preview-image" style="height: 32px;" />
             </div>
-            <!-- Button to open the image selection modal -->
+
             <button (click)="openImageSelection()" class="send-button"> <i class="pi pi-plus"></i></button>
 
 
@@ -94,13 +91,6 @@
 <p-dialog header="Header" [(visible)]="showImageSelection" [modal]="true"
     [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [style]="{ width: '50vw' }" [draggable]="false"
     [resizable]="false">
-
- 
-    <!-- <div class="image-grid">
-            <div *ngFor="let image of currentUserInfo.images" class="image-item" (click)="selectImage(image)">
-                <img [src]="image" alt="Image" />
-            </div>
-        </div> -->
 
         <p-selectButton 
         [options]="stateOptions" 

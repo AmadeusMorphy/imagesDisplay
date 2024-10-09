@@ -3,6 +3,12 @@ import { ChatService } from '../services/chat.service';
 import { debounceTime } from 'rxjs';
 import { UserService } from '../services/user.service';
 
+
+interface Reaction {
+  emoji: string; // Store the emoji as a string
+  userId: string; // Store the userId of the person who reacted
+}
+
 @Component({
   selector: 'app-inbox',
   templateUrl: './inbox.component.html',
@@ -29,18 +35,20 @@ export class InboxComponent implements OnInit {
   isFavVideos: boolean = false;
   users: any[] = [];
   isLoading: boolean = false;
-  inboxUsers: any[] = []; // Filtered users for the inbox (who have exchanged messages)
-  friendsList: any[] = []; // Friends list for starting a new chat
+  inboxUsers: any[] = []; 
+  friendsList: any[] = []; 
   selectedReceiver: any = null;
   currentUserId: any;
   currentUserInfo: any = null;
-  showImageSelection: boolean = false; // To toggle the image selection modal
+  showImageSelection: boolean = false;
   selectedImage: string | null = null;
   newMessage: string | null = null;
   isMobile: boolean = false;
   showFriendsList: boolean = false; 
   isSending: boolean = false;
   isSent: boolean = false;
+
+  hoveredMessage: any = null; 
   image: {
     urls: string
   }[] = [];
@@ -57,9 +65,7 @@ export class InboxComponent implements OnInit {
   }
   ngAfterViewChecked() {
     if (this.selectedReceiver) {
-      console.log('his data: ',this.selectedReceiver)
       localStorage.setItem('currentFriend', this.selectedReceiver.id)
-      console.log('current friend: ', localStorage.getItem('currentFriend'))
       this.scrollToBottom();
     }
   }
@@ -69,7 +75,7 @@ export class InboxComponent implements OnInit {
       this.showfavImgs();
       this.isFavVideos = false
     } else if(value === 'favVideos') {
-      this.isFavImages = false; // Reset if another option is selected
+      this.isFavImages = false; 
       this.isFavVideos = true
     }
   }
@@ -94,7 +100,7 @@ export class InboxComponent implements OnInit {
     try {
       this.chatBody.nativeElement.scrollTo({
         top: this.chatBody.nativeElement.scrollHeight,
-        behavior: 'smooth' // Add smooth scrolling behavior
+        behavior: 'smooth' 
       });
     } catch (err) {
       console.error('Error scrolling:', err);
@@ -103,61 +109,57 @@ export class InboxComponent implements OnInit {
 
 
   checkIfMobile() {
-    this.isMobile = window.innerWidth <= 768; // Set to true if the screen width is less than or equal to 768px
+    this.isMobile = window.innerWidth <= 768; 
   }
 
   backToInbox() {
-    this.selectedReceiver = null; // Reset selected user
+    this.selectedReceiver = null; 
   }
 
-  // Get the current logged-in user info and their messages
+
   getCurrentUser() {
     this.isLoading = true;
     this.currentUserId = localStorage.getItem('userId');
     this.chatService.getUserById(this.currentUserId).subscribe((res: any) => {
       this.currentUserInfo = res;
       this.getInboxUsers();
-      this.getFriendsList(); // Get the friends list
+      this.getFriendsList();
       this.isLoading = false
     });
   }
 
-  // Filter users who have exchanged messages with the current user
+
   getInboxUsers() {
     this.chatService.getUsers().pipe(debounceTime(300)).subscribe((allUsers: any[]) => {
       this.inboxUsers = allUsers.filter(user => {
-        // Check if the user has exchanged messages with the current user
-        console.log(allUsers)
+
         const userName = localStorage.getItem('username')
         return user.messages && user.messages.some((msg: any) =>
         ((msg.receiverId == this.currentUserId && user.username != userName) ||
           (msg.senderId == this.currentUserId && user.username != userName))
         );
       });
-      console.log('Inbox users: ', this.inboxUsers[0]);
     });
   }
 
-  // Get the friends list from the current user info
+
   getFriendsList() {
-    // Assuming the friends are stored in the currentUserInfo object
-    this.friendsList = this.currentUserInfo.friends || []; // Access the friends property
+    this.friendsList = this.currentUserInfo.friends || [];
     console.log('Friends list: ', this.friendsList);
   }
 
-  // Select the receiver to chat with and display messages
+
   selectUser(user: any) {
     this.selectedReceiver = user;
-    // Ensure the selected user has messages or initialize an empty array
     if (!Array.isArray(this.selectedReceiver.messages)) {
       this.selectedReceiver.messages = [];
     }
     this.getInboxUsers()
   }
 
-  // Method to start a new chat with a selected friend
+
   startNewChat(friend: any) {
-    this.selectUser(friend); // Set the selected user to the friend
+    this.selectUser(friend); 
     this.showFriendsList = false;
     this.getInboxUsers()
 
@@ -167,18 +169,18 @@ export class InboxComponent implements OnInit {
     this.showImageSelection = true;
   }
 
-  // Close the image selection modal
+ 
   closeImageSelection() {
     this.showImageSelection = false;
   }
 
-  // Handle image selection
+ 
   selectImage(image: string) {
     this.selectedImage = image;
-    this.showImageSelection = false; // Close the modal after selection
+    this.showImageSelection = false; 
   }
 
-  // Send a message to the selected receiver
+ 
   sendMessage() {
     if (!this.selectedReceiver) {
       console.error('No user selected to send message to');
@@ -192,19 +194,20 @@ export class InboxComponent implements OnInit {
       const message = {
         senderId: this.currentUserId,
         receiverId: this.selectedReceiver.id,
-        content: this.newMessage, // Message content
+        content: this.newMessage, 
         timestamp: new Date().toISOString(),
-        image: this.selectedImage, // Include the selected image (if any)
-        isSending: true, // Set isSending to true when message is created
-        isSent: true // Initially, message is not sent
+        image: this.selectedImage, 
+        isSending: true,
+        isSent: true,
+        reactions: []
       };
       
-      this.newMessage = null; // Clear the text input after sending
+      this.newMessage = null; 
+
   
-      // Push the message to the receiver's messages array
       this.selectedReceiver.messages.push(message);
-  
-      // Simulate sending the message to the backend
+
+
       const updatedReceiverData = {
         ...this.selectedReceiver,
         messages: [...this.selectedReceiver.messages]
@@ -214,11 +217,10 @@ export class InboxComponent implements OnInit {
         (res) => {
           console.log('Message sent to receiver: ', res);
   
-          // Mark the message as sent
-          message.isSending = true; // Sending is done
-          message.isSent = true; // Message has been successfully sent
+   
+          message.isSending = true; 
+          message.isSent = true; 
   
-          // Also update the current user's messages
           const updatedCurrentUserData = {
             messages: [...this.currentUserInfo.messages, message]
           };
@@ -239,10 +241,46 @@ export class InboxComponent implements OnInit {
     this.getInboxUsers()
 
   }
-  
 
-  // Filter messages to display only between current user and the selected receiver
-  getFilteredMessages() {
+  addReaction(message: any, emoji: string) {
+    // Check if the user already reacted to this message
+    const existingReaction = message.reactions.find((reaction: Reaction) => reaction.userId === this.currentUserId);
+  
+    if (existingReaction) {
+      // If the user has already reacted, we can remove their reaction or update it
+      if (existingReaction.emoji === emoji) {
+        // Remove the reaction if it's the same
+        message.reactions = message.reactions.filter((reaction: Reaction) => reaction.userId !== this.currentUserId);
+      } else {
+        // Update the existing reaction
+        existingReaction.emoji = emoji;
+      }
+    } else {
+      // Add a new reaction
+      message.reactions.push({ emoji, userId: this.currentUserId });
+    }
+  
+    // Update the message in the backend if necessary
+    this.updateMessageInDatabase(message);
+  }
+  
+  updateMessageInDatabase(message: any) {
+    const updatedReceiverData = {
+      ...this.selectedReceiver,
+      messages: [...this.selectedReceiver.messages]
+    };
+  
+    this.chatService.updateUserMessages(this.selectedReceiver.id, updatedReceiverData).subscribe(
+      (res) => {
+        console.log('Updated message with reactions:', res);
+      },
+      (error) => {
+        console.error('Error updating message reactions: ', error);
+      }
+    );
+  }
+
+ getFilteredMessages() {
     return this.selectedReceiver.messages.filter((msg: any) =>
       (msg.senderId === this.currentUserId && msg.receiverId === this.selectedReceiver.id) ||
       (msg.senderId === this.selectedReceiver.id && msg.receiverId === this.currentUserId)
