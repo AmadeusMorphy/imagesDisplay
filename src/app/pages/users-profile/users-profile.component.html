@@ -18,10 +18,13 @@
                 <p>Joined at: <br><br> {{friendInfo.DateJoined}}</p>
             </div>
             <div class="videos">
-                <p>Videos saved: </p>
+                <p>Videos saved: {{friendInfo.playlist.length}}</p>
             </div>
             <div class="images">
-                <p>Images saved: </p>
+                <p>Images saved: {{friendInfo.images.length}}</p>
+            </div>
+            <div class="images">
+                <p>Videos watched: {{friendInfo.history.length}}</p>
             </div>
         </div>
     </div>

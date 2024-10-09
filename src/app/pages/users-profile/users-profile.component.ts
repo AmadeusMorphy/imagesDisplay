@@ -30,11 +30,11 @@ export class UsersProfileComponent {
         const dateJoined = new Date(res.DateJoined * 1000); // Multiply by 1000 to convert seconds to milliseconds
         const options: Intl.DateTimeFormatOptions = {
           year: 'numeric',
-          month: 'long',
+          month: 'short',
           day: 'numeric',
           hour: '2-digit',
-          minute: '2-digit',
-          second: '2-digit', // Optional: if you want to include timezone
+          // minute: '2-digit',
+          // second: '2-digit', // Optional: if you want to include timezone
         };
         const formattedDateJoined = dateJoined.toLocaleString('en-US', options); // Adjust the locale as needed
   
@@ -44,6 +44,9 @@ export class UsersProfileComponent {
           email: res.email,
           profileImg: res.profileImg,
           friends: res.friends,
+          images: res.images,
+          playlist: res.playlist,
+          history: res.history,
           DateJoined: formattedDateJoined // Use the formatted date
         };
         this.isLoading = false;
