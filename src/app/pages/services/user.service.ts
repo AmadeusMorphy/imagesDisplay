@@ -29,6 +29,16 @@ export class UserService {
 
 
   
+  addHistory(userId: string, newHistoryItem: any): Observable<any> {
+    return this.getCurrentUser(userId).pipe(  
+      switchMap(user => {
+
+        const updateHistory = user.history ? user.history.concat(newHistoryItem) : [newHistoryItem];
+        return this.http.put<any>(`${this.apiUrl}/${userId}`, { history: updateHistory });
+      })
+    );
+  }
+
   sendFriendReq(userId: string, newFriendReq: { username: string, profileImg: string, email: string, id: string }): Observable<any> {
     return this.getCurrentUser(userId).pipe(
       switchMap(user => {

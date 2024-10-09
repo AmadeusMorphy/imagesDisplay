@@ -40,6 +40,7 @@
                     <p style="margin-top: 0;">
                         {{ message.content }} <br>
                     </p>
+
                     <div class="imgMsg" *ngIf="message.image">
                         <p-image [src]="message.image" [preview]="true" alt="" />
                         </div>
@@ -63,7 +64,7 @@
                         </div>
                         <div class="message-reactions" *ngFor="let reaction of message.reactions">
                             <span style="    background-color: gray;
-    border-radius: 100px;">{{ reaction.emoji }}</span>
+    border-radius: 100px;">     {{ reaction.emoji }}</span>
                           </div>
                     </div>
                 </div>
@@ -103,8 +104,8 @@
         <div class="favImgs" *ngIf="isFavImages">
     <div class="imgContainer">
         <div class="imgs" *ngIf="showImageSelection">
-            <div class="img" *ngFor="let image of currentUserInfo.images">
-                <p-image [src]="image" alt="Image" width="auto" (click)="selectImage(image)" />
+            <div class="img" *ngFor="let img of image">
+                <p-image [src]="img.urls" alt="Image" width="auto" (click)="selectImage(img.urls)" />
             </div>
         </div>
     </div>

@@ -442,6 +442,7 @@ body {
     display: flex;
     gap: 5px;
     opacity: 0;
+    z-index: 999;
     transition: opacity 0.3s ease-in-out;
   }
 
@@ -458,9 +459,9 @@ body {
     cursor: pointer;
     transition: transform 0.2s;
 
-    &:hover {
-      transform: scale(1.3);
-    }
+    // &:hover {
+    //   transform: scale(1.3);
+    // }
   }
 }
 

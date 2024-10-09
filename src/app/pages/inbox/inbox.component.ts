@@ -210,7 +210,7 @@ export class InboxComponent implements OnInit {
 
       const updatedReceiverData = {
         ...this.selectedReceiver,
-        messages: [...this.selectedReceiver.messages]
+        messages: [...this.selectedReceiver.messages, message]
       };
   
       this.chatService.updateUserMessages(this.selectedReceiver.id, updatedReceiverData).subscribe(
@@ -243,24 +243,23 @@ export class InboxComponent implements OnInit {
   }
 
   addReaction(message: any, emoji: string) {
-    // Check if the user already reacted to this message
+    // Find existing reaction from current user
     const existingReaction = message.reactions.find((reaction: Reaction) => reaction.userId === this.currentUserId);
   
     if (existingReaction) {
-      // If the user has already reacted, we can remove their reaction or update it
-      if (existingReaction.emoji === emoji) {
-        // Remove the reaction if it's the same
-        message.reactions = message.reactions.filter((reaction: Reaction) => reaction.userId !== this.currentUserId);
-      } else {
-        // Update the existing reaction
+      // Update the reaction emoji if it's different
+      if (existingReaction.emoji !== emoji) {
         existingReaction.emoji = emoji;
+      } else {
+        // Remove the reaction if they click the same emoji again
+        message.reactions = message.reactions.filter((reaction: Reaction) => reaction.userId !== this.currentUserId);
       }
     } else {
       // Add a new reaction
       message.reactions.push({ emoji, userId: this.currentUserId });
     }
   
-    // Update the message in the backend if necessary
+    // Update the message in the backend
     this.updateMessageInDatabase(message);
   }
   
@@ -279,6 +278,7 @@ export class InboxComponent implements OnInit {
       }
     );
   }
+  
 
  getFilteredMessages() {
     return this.selectedReceiver.messages.filter((msg: any) =>

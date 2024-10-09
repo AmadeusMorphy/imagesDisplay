@@ -1,5 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-home',
@@ -8,10 +9,15 @@ import { HttpClient } from '@angular/common/http';
 })
 export class HomeComponent{
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private userService: UserService
+  ) {}
 
+  currentUserId: any;
   image: {
-    urls: string
+    urls: string,
+    alt_description: string
   }[] = [];
 
   ngOnInit(): void {
@@ -27,13 +33,28 @@ export class HomeComponent{
         console.log(res)
         this.image = res.map((item: any) => {
           return {
-            urls: item.urls.full
+            urls: item.urls.full,
+            alt_description: item.alt_description
           }
         })
         console.log(this.image)
       }
     )
+  }
 
+  selectedId(index: any) {
+    console.log(this.image[index])
+  }
+
+  addToHistory(index: any) {
+
+    this.currentUserId = localStorage.getItem('userId');
+
+    this.userService.addHistory(this.currentUserId, this.image[index]).subscribe(
+      (res: any) => {
+        console.log('added to history: ', res)
+      }
+    )
   }
 
 }
