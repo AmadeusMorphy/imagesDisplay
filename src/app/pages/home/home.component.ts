@@ -7,12 +7,12 @@ import { UserService } from '../services/user.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent{
+export class HomeComponent {
 
   constructor(
     private http: HttpClient,
     private userService: UserService
-  ) {}
+  ) { }
 
   currentUserId: any;
   image: {
@@ -21,7 +21,7 @@ export class HomeComponent{
   }[] = [];
 
   ngOnInit(): void {
-    
+
     this.imagesApi()
   }
   imagesApi() {
